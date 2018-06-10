@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
-
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import app from '../base';
 class Diagram extends Component {
   render() {
     return (
       <div  id="umldiagram">
-        <div id="ud_container_div">
+          <IconButton id="btn">
+            <MenuIcon />
+          </IconButton>
+        {/* <div id="ud_container_div">
           <div id="ud_selector_div">
               <ul id="ud_selector_ul"></ul>
           </div>
@@ -22,7 +27,7 @@ class Diagram extends Component {
 
             </div>
           </div>
-        </div>  
+        </div>   */}
       </div>
     );
   }
