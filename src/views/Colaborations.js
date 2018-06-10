@@ -9,7 +9,6 @@ class Colaborations extends React.Component {
     render(){
         return (
             <div>
-                <MenuItem />
                 <Diagram />
             </div>
         )
