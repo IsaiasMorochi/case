@@ -30,16 +30,7 @@
       You need to enable JavaScript to run this app.
     </noscript>
     <div id="root">
-      
-    
-    
-      <!-- <div id="umldiagram" ></div> -->
-  <div id="debug"></div> 
-
-  
-
-
-   
+      <div id="debug"></div> 
     </div>
     
     <script type="text/javascript" src="UDCore.js"></script>
@@ -47,8 +38,18 @@
     <script type="text/javascript" src="UDApplication.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
     <script type="text/javascript">
-    
       window.onload = function() {
+        //init diagram
+        var width = screen.availWidth-300;
+        var height = screen.availHeight;
+        var app = new Application( {
+         id: 'umldiagram',
+         width: width, height: height 
+        });
+        var current = '';        
+        // var afterInit = false
+        
+        //firebase config
         var config = {
           apiKey: "AIzaSyBapON1RiReOT7dnEnoIUjDJwDjaESkmCM",
           authDomain: "case-5e0d1.firebaseapp.com",
@@ -56,65 +57,55 @@
           projectId: "case-5e0d1",
           storageBucket: "case-5e0d1.appspot.com",
           messagingSenderId: "622778757289"
-        };
-        firebase.initializeApp(config);
-        var db = firebase.database();
-        
-        var width = screen.availWidth-300;
-        var height = screen.availHeight;
-        var app = new Application( {
-         id: 'umldiagram',
-         width: width, height: height 
-        });
-        // app.setXMLString('<umldiagrams><UMLUseCaseDiagram name="Use case diagram" backgroundNodes="#ffffbb"><UMLUseCase id="0.49583758179694737:UMLUseCase_2" x="379" y="282" width="100" height="40" backgroundColor="#ffffbb" lineColor="#294253" lineWidth="1" tagValues=""><superitem id="stereotypes" visibleSubComponents="true"/><item id="name" value=""/></UMLUseCase><UMLActor id="0.49583758179694737:UMLActor_1" x="174" y="188" width="50" height="70" backgroundColor="#ffffbb" tagValues=""><superitem id="stereotypes" visibleSubComponents="true"/><item id="name" value=""/></UMLActor><UMLActor id="0.49583758179694737:UMLActor_0" x="399" y="214" width="50" height="70" backgroundColor="#ffffbb" tagValues=""><superitem id="stereotypes" visibleSubComponents="true"/><item id="name" value=""/></UMLActor></UMLUseCaseDiagram></umldiagrams>')
-        // app.setXMLString()
+        }
+        var initfirebase = firebase.initializeApp(config)
+        var firebasedb = initfirebase.database()
+        ///load diagram////
+        // loadOnInit();
 
-
-        var xmlregistro = db.ref('colaborativo/1');
-        // xmlregistro.on('value',data=>{
-          
-        //   console.log('paso')
-        //   console.log(data.val().xml)
-        //   console.log('paso')
-        //   app.setXMLString(data.val().xml)
-        // })
-
-
-        xmlregistro.on('child_changed', data=>{
-          // var a = data.val() 
-          //     a = a.replace(/\n/gi, "");
-          //     app.setXML((new DOMParser()).parseFromString(a, "text/xml"))
-          // app.setXMLString("")
-          app.setXMLString(data.val())
+        //////////*****AREA DE EVENTOS*****//////////
+        firebasedb.ref('collaborative/1').on('value',(diagram)=>{
+            if(current!=diagram.val().diagram){
+              current = diagram.val().diagram
+            app._delDiagram()
+            app.setXML((new DOMParser()).parseFromString(current, "text/xml"))
+            }else{
+              console.log('son igual')
+            }
         })
-        // var table = db.ref('colaborativo');
-        // table.on('value',xml=>{
-        //   xml.forEach(element => {
-        //     if(element.val().id==1){
-        //       // var a = element.val().xml; 
-        //       // a = a.replace(/\n/gi, "");
-        //       // app.setXML((new DOMParser()).parseFromString(a, "text/xml"))
-        //       console.log(element.val().xml)
-        //       app.setXMLString(element.val().xml)
-        //     }
-        //   });
-        // })
-       
-        var canvas = document.getElementById("canvas_diagram");
-         canvas.addEventListener("mousedown", function (e) {
-           console.log("entroa guardar");
-          db.ref('colaborativo/1').set({
-            id:1,
-            xml: app.getCurrentXMLString()
+        //////////*****AREA DE FUNCIONES***//////////
+        function loadOnInit() {
+          firebasedb.ref('collaborative/1').once('value').then(element=>{
+            console.log(element.val())
+            afterInit = true
+            if(element.val().diagram) app.setXML((new DOMParser()).parseFromString(element.val().diagram, "text/xml"))
+              else console.log("vacio")
+          }).catch(error=>{
+            console.log("error on init", error)
           })
-          app._delDiagram();
-          // app._generateSpecificMenu()
-         })
-        
+        }
+        function saveDiagram(){
+          
+          firebasedb.ref('collaborative/1').set({
+            id:1,
+            diagram: current
+          })
+        }
+        //////////*****AREA DE ELEMENTOS***//////////
+        var canvas = document.getElementById("canvas_diagram");
+        canvas.onclick = ()=>{
+          console.log('clock canvas')
+          current = app.getCurrentXMLString()
+            saveDiagram()
+        }
+
+        const btn = document.getElementById('btn')
+        btn.onclick = (e)=>{
+          saveDiagram()
+        }
       }
-      
-      
     </script>
+    
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
