@@ -24,6 +24,7 @@ const SideBar = (props)=>{
             <div className={classes.root} style={{backgroundColor:'#FFFDE7'}}>
                 <List component="nav">
                     {props.appRoutes.map((prop, key)=>{
+                        if(prop.ignore) return null;
                         return (
                         <NavLink
                             to={prop.path}
