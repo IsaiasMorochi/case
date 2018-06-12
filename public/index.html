@@ -67,7 +67,54 @@
         var firebasedb = initfirebase.database()
         ///load diagram////
         // loadOnInit();
+         //////////***Botones de descarga Imagen y XML****///////////
+         const downImage = document.getElementById('downImage')
+        downImage.onclick = ()=>{
+        console.log('pasopasopaso')
+        var canvasDiagram = document.getElementById('canvas_diagram')
+        console.log(canvasDiagram)
+        var dato = canvasDiagram.toDataURL("image/jpeg")
+        dato = dato.replace("image/jpeg", "image/octet-stream")
+        document.location.href = dato
+      }
 
+      const downXML = document.getElementById('downXML')
+      console.log(downXML)
+      downXML.onclick = ()=>{
+          var datos = obtenerDatos();
+          descargarArchivo(generarXml(datos), 'archivo.xml');
+      }
+      function obtenerDatos() {
+        return { 
+          XML: app.getCurrentXMLString(),
+        };
+      };
+
+      function descargarArchivo(contenidoEnBlob, nombreArchivo) {
+        var reader = new FileReader();
+        reader.onload = function (event) {
+          var save = document.createElement('a');
+          save.href = event.target.result;
+          save.target = '_blank';
+          save.download = nombreArchivo || 'archivo.dat';
+          var clicEvent = new MouseEvent('click', {
+            'view': window,
+            'bubbles': true,
+            'cancelable': true
+          });
+          save.dispatchEvent(clicEvent);
+          (window.URL || window.webkitURL).revokeObjectURL(save.href);
+        };
+        reader.readAsDataURL(contenidoEnBlob);
+      };
+
+      function generarXml(datos) {
+        var texto = [];
+        texto.push(datos.XML);
+        return new Blob(texto, {
+          type: 'application/xml'
+        });
+      };
         //////////*****AREA DE EVENTOS*****//////////
         if(window.location.pathname != '/newdiagram'){
           firebasedb.ref(user.uid+'/collaborative/1').on('value',(diagram)=>{
@@ -151,10 +198,12 @@
           }
         }
 
-        const btn = document.getElementById('btn')
+        const btn = document.getElementById('btn') ///btn de pruebas
         btn.onclick = (e)=>{
-          getDiagrams()
+          //getDiagrams()
         }
+        
+       
       }
     </script>
     
