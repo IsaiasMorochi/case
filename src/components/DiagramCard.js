@@ -10,13 +10,13 @@ import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import red from '@material-ui/core/colors/red';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-
+import Typography from '@material-ui/core/Typography';
 const styles = theme => ({
   card: {
     maxWidth: 400,
@@ -74,12 +74,20 @@ const DiagramCard = (props)=>{
             </Typography>
           </CardContent>
           <CardActions className={classes.actions} disableActionSpacing>
-            <IconButton aria-label="Add to favorites">
-              <FavoriteIcon />
-            </IconButton>
-            <IconButton aria-label="Share">
-              <ShareIcon />
-            </IconButton>
+          <div className="row">
+            <div className="col-lg-6 col-md-6 col-sm-6">
+              <Button variant="outlined" color="secondary">
+                Compartir
+                <ShareIcon />
+              </Button>
+            </div>
+            <div className="col-lg-6 col-md-6 col-sm-6">
+              <Button variant="outlined" color="secondary" >
+                  Editar
+                <ShareIcon  />
+              </Button>
+            </div>
+          </div>
           </CardActions>
         </Card>
       </div>

@@ -27,7 +27,7 @@ import Settings from '@material-ui/icons/Settings';
 /*Imagenes(Inicio)*/
 import logo from '../../logo.svg';
 import icono from '../../icono.png';
-
+import app from '../../base';
 import { Switch, Route, Redirect, NavLink } from "react-router-dom";
 import appRoutes from "../../routes/app";
 import Diagram from '../../components/Diagram';
@@ -169,22 +169,23 @@ class App extends React.Component {
                    <div className={classes.root} style={{backgroundColor:'#FFFDE7'}}>
                    <List component="nav">
                         {appRoutes.map((prop, key)=>{
-                          return (
-                            <NavLink
-                              to={prop.path}
-                              activeClassName="active"
-                              key={key}
-                            >
-                              <ListItem button >
-                                <ListItemIcon >
-                                  <prop.icon />
-                                </ListItemIcon>
-                                <ListItemText
-                                  primary={prop.sidebarName}
-                                />
-                              </ListItem>
-                            </NavLink>
-                          )
+                            if(prop.ignore) return null;
+                            return (
+                                <NavLink
+                                to={prop.path}
+                                activeClassName="active"
+                                key={key}
+                                >
+                                <ListItem button >
+                                    <ListItemIcon >
+                                    <prop.icon />
+                                    </ListItemIcon>
+                                    <ListItemText
+                                    primary={prop.sidebarName}
+                                    />
+                                </ListItem>
+                                </NavLink>
+                            )
                         })}
                     </List>
                 </div>
@@ -222,10 +223,12 @@ class App extends React.Component {
                             >
                                 <MenuIcon />
                             </IconButton>
-                            <Typography variant="title" color="inherit" noWrap style={{color:'#fff',fontSize:17}} align="middle">
+                            <Typography variant="title" color="inherit" noWrap style={{color:'#fff',fontSize:17}} >
                                 DIAGRAMADOR DE SECUENCIA EN LINEA
                             </Typography>
-
+                            <button onClick={()=>{app.auth().signOut().then(()=>{
+                                console.log('salio')
+                            })}}>SALIR</button>
                         </Toolbar>
                     </AppBar>
                     {before}

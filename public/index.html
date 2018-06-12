@@ -59,23 +59,80 @@
           messagingSenderId: "622778757289"
         }
         var initfirebase = firebase.initializeApp(config)
+        console.log("===============================================")
+        console.log("index",JSON.parse(localStorage.getItem('user')).user)
+        console.log("===============================================")
+        var user = JSON.parse(localStorage.getItem('user')).user
+        console.log(user.uid)
         var firebasedb = initfirebase.database()
         ///load diagram////
         // loadOnInit();
+         //////////***Botones de descarga Imagen y XML****///////////
+         const downImage = document.getElementById('downImage')
+        downImage.onclick = ()=>{
+        console.log('pasopasopaso')
+        var canvasDiagram = document.getElementById('canvas_diagram')
+        console.log(canvasDiagram)
+        var dato = canvasDiagram.toDataURL("image/jpeg")
+        dato = dato.replace("image/jpeg", "image/octet-stream")
+        document.location.href = dato
+      }
 
+      const downXML = document.getElementById('downXML')
+      console.log(downXML)
+      downXML.onclick = ()=>{
+          var datos = obtenerDatos();
+          descargarArchivo(generarXml(datos), 'archivo.xml');
+      }
+      function obtenerDatos() {
+        return { 
+          XML: app.getCurrentXMLString(),
+        };
+      };
+
+      function descargarArchivo(contenidoEnBlob, nombreArchivo) {
+        var reader = new FileReader();
+        reader.onload = function (event) {
+          var save = document.createElement('a');
+          save.href = event.target.result;
+          save.target = '_blank';
+          save.download = nombreArchivo || 'archivo.dat';
+          var clicEvent = new MouseEvent('click', {
+            'view': window,
+            'bubbles': true,
+            'cancelable': true
+          });
+          save.dispatchEvent(clicEvent);
+          (window.URL || window.webkitURL).revokeObjectURL(save.href);
+        };
+        reader.readAsDataURL(contenidoEnBlob);
+      };
+
+      function generarXml(datos) {
+        var texto = [];
+        texto.push(datos.XML);
+        return new Blob(texto, {
+          type: 'application/xml'
+        });
+      };
         //////////*****AREA DE EVENTOS*****//////////
-        firebasedb.ref('collaborative/1').on('value',(diagram)=>{
-            if(current!=diagram.val().diagram){
-              current = diagram.val().diagram
-            app._delDiagram()
-            app.setXML((new DOMParser()).parseFromString(current, "text/xml"))
-            }else{
-              console.log('son igual')
-            }
-        })
+        if(window.location.pathname != '/newdiagram'){
+          firebasedb.ref(user.uid+'/collaborative/1').on('value',(diagram)=>{
+            console.log('paso')
+            if(diagram!=null){
+              if(current!=diagram.val().diagram){
+                current = diagram.val().diagram
+              app._delDiagram()
+              app.setXML((new DOMParser()).parseFromString(current, "text/xml"))
+              }else{
+                console.log('son igual')
+              }
+            }else{ console.log("es null")}
+          })
+        }
         //////////*****AREA DE FUNCIONES***//////////
         function loadOnInit() {
-          firebasedb.ref('collaborative/1').once('value').then(element=>{
+          firebasedb.ref(user.uid+'/collaborative/'+user.user.uid+'/1').once('value').then(element=>{
             console.log(element.val())
             afterInit = true
             if(element.val().diagram) app.setXML((new DOMParser()).parseFromString(element.val().diagram, "text/xml"))
@@ -85,24 +142,68 @@
           })
         }
         function saveDiagram(){
-          
-          firebasedb.ref('collaborative/1').set({
+          firebasedb.ref(user.uid+'/collaborative/1').set({
             id:1,
             diagram: current
           })
+        }
+        function getDate() {
+          var hoy = new Date();
+          var dd = hoy.getDate();
+          var mm = hoy.getMonth()+1; //hoy es 0!
+          var yyyy = hoy.getFullYear();
+          if(dd<10) dd='0'+dd
+          if(mm<10) mm='0'+mm
+          hoy = mm+'/'+dd+'/'+yyyy;
+          return hoy;
+        }
+        //////////*****CRUD DE DIAGRAMAS***//////////
+        function getDiagrams() {
+          firebasedb.ref(user.uid+'/diagrams').once('value').then(diagrams=>{
+            diagrams.forEach(diagram => {
+              console.log(diagram.val())
+            });
+          })
+        }
+
+        function insertDiagram(params) {
+          firebasedb.ref(user.uid+'/diagrams').push(params)
         }
         //////////*****AREA DE ELEMENTOS***//////////
         var canvas = document.getElementById("canvas_diagram");
         canvas.onclick = ()=>{
           console.log('clock canvas')
           current = app.getCurrentXMLString()
-            saveDiagram()
+          if(window.location.pathname!='/newdiagram') saveDiagram()
+        }
+       
+        ////savediagram button
+        const btnsave = document.getElementById('btnsavediagram')
+        btnsave.onclick = (event)=>{
+          const name = document.getElementById('diagram_name').value
+          const description = document.getElementById('diagram_description').value
+          const diagramtype = document.getElementById('diagram_type').value
+          
+          if(name && description && diagramtype){
+            const params = {
+              name,
+              description,
+              diagramtype,
+              date: getDate(),
+              xml: current
+            }
+            insertDiagram(params)
+          }else{
+            alert('meta todos los datos')
+          }
         }
 
-        const btn = document.getElementById('btn')
+        const btn = document.getElementById('btn') ///btn de pruebas
         btn.onclick = (e)=>{
-          saveDiagram()
+          //getDiagrams()
         }
+        
+       
       }
     </script>
     
