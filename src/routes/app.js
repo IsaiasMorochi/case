@@ -5,6 +5,7 @@ import MyDiagrams from '../views/MyDiagrams'
 import Trash from '../views/Trash'
 import Tools from '../views/Tools'
 import NewDiagram from '../views/NewDiagram'
+import RealTime from '../views/RealTime'
 
 import Face from '@material-ui/icons/Face';
 import FormatShapes from '@material-ui/icons/FormatShapes';
@@ -54,6 +55,13 @@ const appRoutes = [
         icon: Settings,
         ignore:true,
         component: NewDiagram
+    },
+    {
+        path: '/realtime',
+        sidebarName: 'real',
+        icon: Settings,
+        ignore:true,
+        component: RealTime
     }
 ]
 

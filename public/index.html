@@ -37,6 +37,7 @@
     <script type="text/javascript" src="UDModules.js"></script>
     <script type="text/javascript" src="UDApplication.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+    <script src="../src/scripts/diagrama.js"></script>
     <script type="text/javascript">
       window.onload = function() {
         //init diagram
@@ -47,7 +48,11 @@
          width: width, height: height 
         });
         var current = '';        
-        // var afterInit = false
+        // current diagram
+        console.log("====================DIAGRAM===========================")        
+        const collaborative = JSON.parse(localStorage.getItem('diagramcollaborative'))
+        console.log(collaborative)
+        console.log("===============================================")
         
         //firebase config
         var config = {
@@ -66,11 +71,15 @@
         console.log(user.uid)
         var firebasedb = initfirebase.database()
         ///load diagram////
-        // loadOnInit();
+        // if(window.location.pathname=='/realtime'){
+        //   console.log("EN REALPATH")
+        //   loadOnInit();
+        // }else{
+        //   "no en REALPATH"
+        // }
          //////////***Botones de descarga Imagen y XML****///////////
          const downImage = document.getElementById('downImage')
         downImage.onclick = ()=>{
-        console.log('pasopasopaso')
         var canvasDiagram = document.getElementById('canvas_diagram')
         console.log(canvasDiagram)
         var dato = canvasDiagram.toDataURL("image/jpeg")
@@ -116,12 +125,11 @@
         });
       };
         //////////*****AREA DE EVENTOS*****//////////
-        if(window.location.pathname != '/newdiagram'){
-          firebasedb.ref(user.uid+'/collaborative/1').on('value',(diagram)=>{
-            console.log('paso')
+        if(window.location.pathname == '/realtime'){
+          firebasedb.ref(collaborative.owner+'/diagrams/'+collaborative.diagram).on('value',(diagram)=>{
             if(diagram!=null){
-              if(current!=diagram.val().diagram){
-                current = diagram.val().diagram
+              if(current!=diagram.val().xml){
+                current = diagram.val().xml
               app._delDiagram()
               app.setXML((new DOMParser()).parseFromString(current, "text/xml"))
               }else{
@@ -132,20 +140,27 @@
         }
         //////////*****AREA DE FUNCIONES***//////////
         function loadOnInit() {
-          firebasedb.ref(user.uid+'/collaborative/'+user.user.uid+'/1').once('value').then(element=>{
-            console.log(element.val())
-            afterInit = true
-            if(element.val().diagram) app.setXML((new DOMParser()).parseFromString(element.val().diagram, "text/xml"))
+          firebasedb.ref(collaborative.owner+'/diagrams/'+collaborative.diagram).once('value').then(element=>{
+            if(element.val().xml) app.setXML((new DOMParser()).parseFromString(element.val().xml, "text/xml"))
               else console.log("vacio")
           }).catch(error=>{
             console.log("error on init", error)
           })
         }
         function saveDiagram(){
-          firebasedb.ref(user.uid+'/collaborative/1').set({
-            id:1,
-            diagram: current
+          firebasedb.ref(collaborative.owner+'/diagrams/'+collaborative.diagram).once('value').then(diagram=>{
+            return diagram.val()
+          }).then(values=>{
+            const params = {
+                  date: values.date,
+                  description: values.description,
+                  diagramtype: values.diagramtype,
+                  name: values.name,
+                  xml: current
+            }
+            firebasedb.ref(collaborative.owner+'/diagrams/'+collaborative.diagram).set(params)
           })
+          
         }
         function getDate() {
           var hoy = new Date();
@@ -158,13 +173,13 @@
           return hoy;
         }
         //////////*****CRUD DE DIAGRAMAS***//////////
-        function getDiagrams() {
-          firebasedb.ref(user.uid+'/diagrams').once('value').then(diagrams=>{
-            diagrams.forEach(diagram => {
-              console.log(diagram.val())
-            });
-          })
-        }
+        // function getDiagrams() {
+        //   firebasedb.ref(user.uid+'/diagrams').once('value').then(diagrams=>{
+        //     diagrams.forEach(diagram => {
+        //       console.log(diagram.val())
+        //     });
+        //   })
+        // }
 
         function insertDiagram(params) {
           firebasedb.ref(user.uid+'/diagrams').push(params)

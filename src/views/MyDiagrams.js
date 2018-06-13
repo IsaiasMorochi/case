@@ -11,7 +11,8 @@ class MyDiagrams extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            diagrams: []
+            diagrams: [],
+            users: []
         }
     }
 
@@ -36,7 +37,7 @@ class MyDiagrams extends React.Component {
         return (
             <div className="row">
                 <div className="col-lg-12 col-md-12 col-sm-12">
-                <Button onClick={()=>{this.props.history.push('/newdiagram')}} variant="fab" color="primary" aria-label="add" >
+                <Button onClick={()=>{window.location.href = '/newdiagram'}} variant="fab" color="primary" aria-label="add" >
                     <AddIcon />
                 </Button>
                 </div>

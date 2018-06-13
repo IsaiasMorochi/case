@@ -17,37 +17,43 @@ import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Typography from '@material-ui/core/Typography';
-const styles = theme => ({
-  card: {
-    maxWidth: 400,
-    marginBottom: '2em'
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
-  actions: {
-    display: 'flex',
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-    marginLeft: 'auto',
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-  avatar: {
-    backgroundColor: red[500],
-  },
-});
 
-const DiagramCard = (props)=>{
-    const { classes, name, date, image, description } = props;
+import ModalUsers from './ModalUsers'
+import app from '../base'
+class DiagramCard extends React.Component{
+  constructor(props){
+    super(props)
+    this.state = {
+      openModal: false,
+      diagram:null
+    };
+  }
+
+  _handleOpenModal = () => this.setState({ openModal: true });
+
+  _handleCloseModal = () => this.setState({ openModal: false });
+
+  componentWillMount() {
+    const currentuser = app.auth().currentUser
+    const {collaboration} = this.props
+    app.database().ref(collaboration.owner+'/diagrams/'+collaboration.diagram).once('value').then(element=>{
+      this.setState({diagram:element.val()})
+    })
+    
+  }
+
+  _toDiagram(){
+    localStorage.setItem("diagramcollaborative",JSON.stringify(this.props.collaboration))
+    window.location.href = '/realtime'
+  }
+
+  render(){
+    const { classes, image } = this.props
+    const {diagram} = this.state   
     return (
       <div className="col-lg-4 col-md-4 col-sm-6">
+        {(this.state.diagram!=null)?
+        <div>
         <Card className={classes.card}>
           <CardHeader
             avatar={
@@ -60,8 +66,8 @@ const DiagramCard = (props)=>{
                 <MoreVertIcon />
               </IconButton>
             }
-            title={name}
-            subheader={date}
+            title={diagram.name}
+            subheader={diagram.date}
           />
           <CardMedia
             className={classes.media}
@@ -70,30 +76,58 @@ const DiagramCard = (props)=>{
           />
           <CardContent>
             <Typography component="p">
-              {description}
-            </Typography>
+              {diagram.description}
+            </Typography> 
           </CardContent>
           <CardActions className={classes.actions} disableActionSpacing>
           <div className="row">
             <div className="col-lg-6 col-md-6 col-sm-6">
-              <Button variant="outlined" color="secondary">
-                Compartir
+              <Button onClick={this._handleOpenModal} variant="outlined" color="secondary">
+                  Compartir
                 <ShareIcon />
               </Button>
             </div>
             <div className="col-lg-6 col-md-6 col-sm-6">
-              <Button variant="outlined" color="secondary" >
+              <Button onClick={()=>this._toDiagram()} variant="outlined" color="secondary" >
                   Editar
-                <ShareIcon  />
+                <ShareIcon/>
               </Button>
             </div>
           </div>
           </CardActions>
         </Card>
+        <ModalUsers diagramid={this.props.collaboration.diagram} openModal={this.state.openModal} _handleCloseModal={this._handleCloseModal.bind(this)} />
+        </div>:null}
       </div>
     );
   }
-
+}
+  const styles = theme => ({
+    card: {
+      maxWidth: 400,
+      marginBottom: '2em'
+    },
+    media: {
+      height: 0,
+      paddingTop: '56.25%', // 16:9
+    },
+    actions: {
+      display: 'flex',
+    },
+    expand: {
+      transform: 'rotate(0deg)',
+      transition: theme.transitions.create('transform', {
+        duration: theme.transitions.duration.shortest,
+      }),
+      marginLeft: 'auto',
+    },
+    expandOpen: {
+      transform: 'rotate(180deg)',
+    },
+    avatar: {
+      backgroundColor: red[500],
+    },
+  });
 
 DiagramCard.propTypes = {
   classes: PropTypes.object.isRequired,
