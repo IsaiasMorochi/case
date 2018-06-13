@@ -2,14 +2,14 @@ import React from "react";
 import app from "../base";
 import { Link, Route } from "react-router-dom";
 
-const LoginActions = () => (
+const SignupActions = () => (
   <div>
-    <span>No tienes cuenta?</span>
-    <Link to="/signup"> crear nueva cuenta</Link>
+    <span>Ya tengo cuenta</span>
+    <Link to="/login"> iniciar sesion</Link>
   </div>
 );
 
-class Login extends React.Component {
+class Signup extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -20,10 +20,10 @@ class Login extends React.Component {
     try {
       const user = await app
         .auth()
-        .signInWithEmailAndPassword(email.value, password.value);
+        .createUserWithEmailAndPassword(email.value, password.value);
       localStorage.setItem("user", JSON.stringify(user));
       this.props.history.push("/profile");
-      console.log("======== Usuario Logueado ===========");
+      console.log("======== Usuario Creado =============");
       console.log(user);
       console.log("====================================");
     } catch (error) {
@@ -38,7 +38,7 @@ class Login extends React.Component {
             <div className="row  card justify-content-center align-items-center">
               <div className="col-sm-6 ">
                 <h1>
-                  <strong>Iniciar Sesion</strong>
+                  <strong>Registrarse</strong>
                 </h1>
               </div>
             </div>
@@ -71,14 +71,14 @@ class Login extends React.Component {
                       />
                     </div>
                     <button type="submit" className="btn">
-                      Ingresar
+                      Registrarme
                     </button>
                   </form>
                   <div style={{ marginTop: "8px" }}>
                     <Route
-                      path="/login"
+                      path="/signup"
                       exact
-                      render={() => <LoginActions />}
+                      render={() => <SignupActions />}
                     />
                   </div>
                 </div>
@@ -91,4 +91,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default Signup;
