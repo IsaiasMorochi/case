@@ -7,7 +7,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -17,21 +16,15 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 /*Iconos (Inicio)*/
-import Face from '@material-ui/icons/Face';
-import FormatShapes from '@material-ui/icons/FormatShapes';
-import Share from '@material-ui/icons/Share';
-import DeleteSweep from '@material-ui/icons/DeleteSweep';
-import Settings from '@material-ui/icons/Settings';
+import AccountCircle from '@material-ui/icons/Home';
+import Notificacion from '@material-ui/icons/NotificationsActive';
 /*Iconos (Fin)*/
 
 /*Imagenes(Inicio)*/
-import logo from '../../logo.svg';
 import icono from '../../icono.png';
 import app from '../../base';
 import { Switch, Route, Redirect, NavLink } from "react-router-dom";
 import appRoutes from "../../routes/app";
-import Diagram from '../../components/Diagram';
-import MenuItem from '../../components/MenuItem';
 
 const drawerWidth = 240;
 
@@ -156,9 +149,10 @@ class App extends React.Component {
                 }}
             >
                 <div className={classes.drawerHeader} style={{backgroundColor:'#0277BD'}}>
-                    <img src={icono} style={{width:30}} align="middle"/>
-                    
-                    <label style={{color:'#fff',fontSize:15}}> DIAGRAMALO</label>
+                    <img src={icono} style={{width:30}} align="middle"/>                    
+                    <label style={{color:'#fff', fontSize:20}}>DIA</label>
+                    <label style={{color:'#FFCA28', fontSize:20}}>GRA</label>
+                    <label style={{color:'#FAFAFA', fontSize:20}}>MEX</label>
                     <IconButton onClick={this.handleDrawerClose}>
                         {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                     </IconButton>
@@ -222,13 +216,36 @@ class App extends React.Component {
                                 className={classNames(classes.menuButton, open && classes.hide)}
                             >
                                 <MenuIcon />
-                            </IconButton>
-                            <Typography variant="title" color="inherit" noWrap style={{color:'#fff',fontSize:17}} >
-                                DIAGRAMADOR DE SECUENCIA EN LINEA
+                            </IconButton>                               
+                            <Typography variant="title" color="inherit" noWrap style={{color:'#fff',fontSize:17}} style={{ flex: 1 }}>
+                                DIAGRAMADOR DE UML
                             </Typography>
-                            <button onClick={()=>{app.auth().signOut().then(()=>{
+                            
+                           
+                            <div>
+                              
+                              <IconButton
+                               aria-owns={open ? 'menu-appbar' : null}
+                               aria-haspopup="true"
+                               onClick={this.handleMenu}
+                               color="inherit"
+                              >
+                               
+                               <Notificacion />
+                               </IconButton>                             
+  
+                              <IconButton
+                               aria-owns={open ? 'menu-appbar' : null}
+                               aria-haspopup="true"
+                               onClick={()=>{app.auth().signOut().then(()=>{
                                 console.log('salio')
-                            })}}>SALIR</button>
+                                })}}
+                               color="inherit"
+                              >
+                               
+                               <AccountCircle />
+                               </IconButton>                             
+                              </div>   
                         </Toolbar>
                     </AppBar>
                     {before}
