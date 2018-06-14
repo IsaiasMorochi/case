@@ -31,6 +31,11 @@ class CardDiagram extends React.Component {
     _handleOpenModal = () => this.setState({ openModal: true });
 
     _handleCloseModal = () => this.setState({ openModal: false });
+
+    _toEdit = ()=>{
+      localStorage.setItem("diagramcollaborative",JSON.stringify(this.props.collaboration))
+      window.location.href = '/realtime'
+    }
     render(){
     const { classes, name, date, image, description } = this.props;
     return (
@@ -69,8 +74,8 @@ class CardDiagram extends React.Component {
               </Button>
             </div>
             <div className="col-lg-6 col-md-6 col-sm-6">
-              <Button variant="outlined" color="secondary" >
-                  Editar
+              <Button onClick={this._toEdit} variant="outlined" color="secondary" >
+                  Modificar
                 <ShareIcon  />
               </Button>
             </div>

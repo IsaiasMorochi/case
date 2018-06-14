@@ -27,6 +27,14 @@ class MyDiagrams extends React.Component {
         })
     }
 
+    _userParams(diagramid){
+        var user = app.auth().currentUser
+        return {
+            collaborator: user.uid,
+            diagram: diagramid,
+            owner: user.uid
+        }
+    }
 
     render(){
         return (
@@ -37,9 +45,11 @@ class MyDiagrams extends React.Component {
                 </Button>
                 </div>
                 <div className="col-lg-12 col-md-12 col-sm-12">
-                    {this.state.diagrams.map((diagram, index)=>{
-                        return <CardDiagram key={index} diagramid={diagram.key} name={diagram.val().name} date={diagram.val().date} description={diagram.val().description} image="http://backgroundcheckall.com/wp-content/uploads/2017/12/background-material-design-10.jpg" />
-                    })}
+                    <div className="row">
+                        {this.state.diagrams.map((diagram, index)=>{
+                            return <CardDiagram key={index} collaboration={this._userParams(diagram.key)} diagramid={diagram.key} name={diagram.val().name} date={diagram.val().date} description={diagram.val().description} image="http://backgroundcheckall.com/wp-content/uploads/2017/12/background-material-design-10.jpg" />
+                        })}
+                    </div>
                 </div>
             </div>
         )
