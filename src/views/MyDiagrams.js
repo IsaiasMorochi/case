@@ -32,11 +32,14 @@ class MyDiagrams extends React.Component {
         return (
             <div className="row">
                 <div className="col-lg-12 col-md-12 col-sm-12">
-                <Button onClick={()=>{window.location.href = '/newdiagram'}} variant="fab" color="primary" aria-label="add" >
+                <Button onClick={()=>{window.location.href = '/newdiagram'}} variant="raised" color="primary" aria-label="add" style={{backgroundColor: "#3abdfc", width:"100%"}}>
+                    Crear Nuevo Diagrama
                     <AddIcon />
-                </Button>
+                </Button>                
                 </div>
+                
                 <div className="col-lg-12 col-md-12 col-sm-12">
+                <br/>
                     {this.state.diagrams.map((diagram, index)=>{
                         return <CardDiagram key={index} diagramid={diagram.key} name={diagram.val().name} date={diagram.val().date} description={diagram.val().description} image="http://backgroundcheckall.com/wp-content/uploads/2017/12/background-material-design-10.jpg" />
                     })}
