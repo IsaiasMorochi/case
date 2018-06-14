@@ -18,38 +18,23 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Typography from '@material-ui/core/Typography';
 
+import ModalUsers from './ModalUsers'
 import app from '../base'
-class DiagramCard extends React.Component{
-  constructor(props){
-    super(props)
-    this.state = {
-      diagram:null
-    };
-  }
 
+class CardDiagram extends React.Component {
+    constructor(props){
+     super(props)
+     this.state = {
+      openModal: false
+     }
+    }
+    _handleOpenModal = () => this.setState({ openModal: true });
 
-
-  componentWillMount() {
-    const currentuser = app.auth().currentUser
-    const {collaboration} = this.props
-    app.database().ref(collaboration.owner+'/diagrams/'+collaboration.diagram).once('value').then(element=>{
-      this.setState({diagram:element.val()})
-    })
-    
-  }
-
-  _toDiagram(){
-    localStorage.setItem("diagramcollaborative",JSON.stringify(this.props.collaboration))
-    window.location.href = '/realtime'
-  }
-
-  render(){
-    const { classes, image } = this.props
-    const {diagram} = this.state   
+    _handleCloseModal = () => this.setState({ openModal: false });
+    render(){
+    const { classes, name, date, image, description } = this.props;
     return (
       <div className="col-lg-4 col-md-4 col-sm-6">
-        {(this.state.diagram!=null)?
-        <div>
         <Card className={classes.card}>
           <CardHeader
             avatar={
@@ -62,8 +47,8 @@ class DiagramCard extends React.Component{
                 <MoreVertIcon />
               </IconButton>
             }
-            title={diagram.name}
-            subheader={diagram.date}
+            title={name}
+            subheader={date}
           />
           <CardMedia
             className={classes.media}
@@ -72,61 +57,59 @@ class DiagramCard extends React.Component{
           />
           <CardContent>
             <Typography component="p">
-              {diagram.description}
-            </Typography> 
+              {description}
+            </Typography>
           </CardContent>
           <CardActions className={classes.actions} disableActionSpacing>
           <div className="row">
             <div className="col-lg-6 col-md-6 col-sm-6">
               <Button onClick={this._handleOpenModal} variant="outlined" color="secondary">
-                  Compartir
+                Compartir
                 <ShareIcon />
               </Button>
             </div>
             <div className="col-lg-6 col-md-6 col-sm-6">
-              <Button onClick={()=>this._toDiagram()} variant="outlined" color="secondary" >
+              <Button variant="outlined" color="secondary" >
                   Editar
-                <ShareIcon/>
+                <ShareIcon  />
               </Button>
             </div>
           </div>
           </CardActions>
         </Card>
-          
-        </div>:null}
+        <ModalUsers diagramid={this.props.diagramid} openModal={this.state.openModal} _handleCloseModal={this._handleCloseModal.bind(this)} />
       </div>
     );
   }
 }
-  const styles = theme => ({
-    card: {
-      maxWidth: 400,
-      marginBottom: '2em'
-    },
-    media: {
-      height: 0,
-      paddingTop: '56.25%', // 16:9
-    },
-    actions: {
-      display: 'flex',
-    },
-    expand: {
-      transform: 'rotate(0deg)',
-      transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-      }),
-      marginLeft: 'auto',
-    },
-    expandOpen: {
-      transform: 'rotate(180deg)',
-    },
-    avatar: {
-      backgroundColor: red[500],
-    },
-  });
 
-DiagramCard.propTypes = {
+CardDiagram.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-
-export default withStyles(styles)(DiagramCard);
+const styles = theme => ({
+  card: {
+    maxWidth: 400,
+    marginBottom: '2em'
+  },
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9
+  },
+  actions: {
+    display: 'flex',
+  },
+  expand: {
+    transform: 'rotate(0deg)',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+    marginLeft: 'auto',
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
+  },
+  avatar: {
+    backgroundColor: red[500],
+  },
+});
+export default withStyles(styles)(CardDiagram);
