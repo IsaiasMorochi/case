@@ -1,12 +1,12 @@
 import firebase from "firebase";
 
 const app = firebase.initializeApp({
-  apiKey: "AIzaSyBapON1RiReOT7dnEnoIUjDJwDjaESkmCM",
-    authDomain: "case-5e0d1.firebaseapp.com",
-    databaseURL: "https://case-5e0d1.firebaseio.com",
-    projectId: "case-5e0d1",
-    storageBucket: "case-5e0d1.appspot.com",
-    messagingSenderId: "622778757289"
+  apiKey: "AIzaSyDA0DTQohdbqkxMPH6vbdSQX1-WcIHotLI",
+  authDomain: "case-f114b.firebaseapp.com",
+  databaseURL: "https://case-f114b.firebaseio.com",
+  projectId: "case-f114b",
+  storageBucket: "case-f114b.appspot.com",
+  messagingSenderId: "978003634378"
 });
 
 export default app;

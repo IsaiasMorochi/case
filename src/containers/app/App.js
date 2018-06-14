@@ -47,7 +47,7 @@ const styles = theme => ({
             duration: theme.transitions.duration.leavingScreen,
 
         }),
-        backgroundColor:'#0277BD',
+        backgroundColor:'#039be5',
     },
     appBarShift: {
         width: `calc(100% - ${drawerWidth}px)`,
@@ -83,7 +83,7 @@ const styles = theme => ({
     content: {
         flexGrow: 1,
 /*        backgroundColor: theme.palette.background.default,*/
-        backgroundColor: '#F9FBE7',
+        backgroundColor: '#cfd8dc',
         padding: theme.spacing.unit * 3,
         transition: theme.transitions.create('margin', {
             easing: theme.transitions.easing.sharp,
@@ -120,11 +120,16 @@ const switchRoutes = (
 );
 
 class App extends React.Component {
-    state = {
-        open: false,
-        anchor: 'left',
-        option:true
-    };
+   
+    constructor() {
+        super()
+        this.state = {
+            open: false,
+            anchor: 'left',
+            option:true,
+            userAuth:false
+        };
+      }
 
     handleDrawerOpen = () => {
         this.setState({ open: true });
@@ -134,13 +139,39 @@ class App extends React.Component {
         this.setState({ open: false });
     };
 
-
+    handleSignOut = () => {
+        this.setState({ userAuth: false });
+        localStorage.removeItem("login");
+        this.props.history.push("/login");
+        app
+          .auth()
+          .signOut()
+          .then(() => {
+            console.log("Te has desconectado correctamente");
+          });
+      };
+    
+      //llamado antes de que el componente carge
+      componentWillMount() {
+        var user = JSON.parse(localStorage.getItem("login"));        
+        if (user) {
+          this.setState({ userAuth: true });
+          console.log("true");
+        } else {
+          this.setState({ userAuth: false });
+          console.log("false");
+        }
+      }
+    
 
     render() {
         const { classes, theme } = this.props;
         const { anchor, open } = this.state;
+
+        const { userAuth } = this.setState;
+
         const drawer = (
-            <Drawer
+            <Drawer style={{backgroundColor:'#19212b'}}
                 variant="persistent"
                 anchor={anchor}
                 open={open}
@@ -148,19 +179,19 @@ class App extends React.Component {
                     paper: classes.drawerPaper,
                 }}
             >
-                <div className={classes.drawerHeader} style={{backgroundColor:'#0277BD'}}>
+                <div className={classes.drawerHeader} style={{backgroundColor:'#262f3d'}}>
                     <img src={icono} style={{width:30}} align="middle"/>                    
-                    <label style={{color:'#fff', fontSize:20}}>DIA</label>
+                    <label style={{color:'#F4F6F7', fontSize:20}}>DIA</label>
                     <label style={{color:'#FFCA28', fontSize:20}}>GRA</label>
-                    <label style={{color:'#FAFAFA', fontSize:20}}>MEX</label>
+                    <label style={{color:'#F4F6F7', fontSize:20}}>MEX</label>
                     <IconButton onClick={this.handleDrawerClose}>
                         {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                     </IconButton>
 
                 </div>
                 {/* <List>{mailFolderListItems}</List>*/}
-
-                   <div className={classes.root} style={{backgroundColor:'#FFFDE7'}}>
+                    
+                   <div className={classes.root} style={{backgroundColor:'#19212b'}}>
                    <List component="nav">
                         {appRoutes.map((prop, key)=>{
                             if(prop.ignore) return null;
@@ -172,12 +203,15 @@ class App extends React.Component {
                                 >
                                 <ListItem button >
                                     <ListItemIcon >
-                                    <prop.icon />
+                                    <prop.icon style={{color:"#b7b9bc"}}/>
                                     </ListItemIcon>
-                                    <ListItemText
-                                    primary={prop.sidebarName}
+                                    <ListItemText  
+                                    // classes={{ color:"#fff" }}                                   
+                                   // primary={prop.sidebarName}
+                                   disableTypography
+                                   primary={<Typography style={{ color: '#b7b9bc' }}>{prop.sidebarName}</Typography>}
                                     />
-                                </ListItem>
+                                    </ListItem>
                                 </NavLink>
                             )
                         })}
@@ -207,8 +241,12 @@ class App extends React.Component {
                             [classes.appBarShift]: open,
                             [classes[`appBarShift-${anchor}`]]: open,
                         })}
-                    >
+                    >                    
+                      
+                    {!(userAuth) ? (
+                        
                         <Toolbar disableGutters={!open}>
+                         
                             <IconButton
                                 color="inherit"
                                 aria-label="open drawer"
@@ -217,7 +255,7 @@ class App extends React.Component {
                             >
                                 <MenuIcon />
                             </IconButton>                               
-                            <Typography variant="title" color="inherit" noWrap style={{color:'#fff',fontSize:17}} style={{ flex: 1 }}>
+                            <Typography variant="title" color="inherit" noWrap style={{color:'#fff',fontSize:12}} style={{ flex: 1 }}>
                                 DIAGRAMADOR DE UML
                             </Typography>
                             
@@ -237,9 +275,7 @@ class App extends React.Component {
                               <IconButton
                                aria-owns={open ? 'menu-appbar' : null}
                                aria-haspopup="true"
-                               onClick={()=>{app.auth().signOut().then(()=>{
-                                console.log('salio')
-                                })}}
+                               onClick={this.handleSignOut}
                                color="inherit"
                               >
                                
@@ -247,6 +283,8 @@ class App extends React.Component {
                                </IconButton>                             
                               </div>   
                         </Toolbar>
+                        ): ""}
+                        
                     </AppBar>
                     {before}
                     <main

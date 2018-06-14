@@ -27,7 +27,8 @@ class NewDiagram extends React.Component {
                             <TextField id="diagram_type" label="Tipo de Diagrama..." margin="normal" />
                         </div>
                         <div className="col-lg-3 col-md-3 col-sm-3">
-                            <Button id="btnsavediagram" variant="fab" color="secondary" aria-label="add" >
+                            <Button id="btnsavediagram" variant="raised" color="primary" aria-label="add" style={{backgroundColor: "#3abdfc", width:"100%"}}>
+                                Guardar
                                 <AddIcon />
                             </Button>
                         </div>
