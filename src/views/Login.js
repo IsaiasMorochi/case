@@ -1,4 +1,5 @@
 import React from "react";
+import firebase from "firebase";
 import app from "../base";
 import { Link, Route } from "react-router-dom";
 
@@ -22,6 +23,7 @@ class Login extends React.Component {
         .auth()
         .signInWithEmailAndPassword(email.value, password.value);
       localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("login", JSON.stringify(user));
       this.props.history.push("/profile");
       console.log("======== Usuario Logueado ===========");
       console.log(user);
@@ -30,26 +32,37 @@ class Login extends React.Component {
       alert(error);
     }
   };
+
+  handleSignGitHub = async event => {
+    event.preventDefault();
+    var provider = new firebase.auth.GithubAuthProvider();
+    try {
+      const user = await app.auth().signInWithPopup(provider);
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("login", JSON.stringify(user));
+      this.props.history.push("/profile");
+      console.log("======== Usuario Logueado con GitHub ===========");
+      console.log(user);
+      console.log("====================================");
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   render() {
     return (
       <div className="top-content">
         <div className="inner-bg">
           <div className="container">
-            <div className="row  card justify-content-center align-items-center">
-              <div className="col-sm-6 ">
-                <h1>
-                  <strong>Iniciar Sesion</strong>
-                </h1>
-              </div>
-            </div>
-            <div className="row card justify-content-center align-items-center ">
-              <div className="col-sm-6 col-sm-offset-3 form-box">
+            <div className="card justify-content-center align-items-center ">
+              <div className=" col-sm-6 col-sm-offset-3 form-box">
+                <div className="col-sm-12 d-flex justify-content-center">
+                  <h1>
+                    <strong>Iniciar Sesion</strong>
+                  </h1>
+                </div>
                 <div className="form-bottom">
-                  <form
-                    role="form"
-                    className="login-form "
-                    onSubmit={this.handleSignUp}
-                  >
+                  <form className="login-form " onSubmit={this.handleSignUp}>
                     <div className="form-group">
                       <label className="sr-only">Usuario</label>
                       <input
@@ -81,6 +94,12 @@ class Login extends React.Component {
                       render={() => <LoginActions />}
                     />
                   </div>
+                  <button
+                    onClick={this.handleSignGitHub}
+                    className="fa fa-github"
+                  >
+                    GitHub
+                  </button>
                 </div>
               </div>
             </div>

@@ -35,21 +35,15 @@ class Signup extends React.Component {
       <div className="top-content">
         <div className="inner-bg">
           <div className="container">
-            <div className="row  card justify-content-center align-items-center">
-              <div className="col-sm-6 ">
-                <h1>
-                  <strong>Registrarse</strong>
-                </h1>
-              </div>
-            </div>
             <div className="row card justify-content-center align-items-center ">
               <div className="col-sm-6 col-sm-offset-3 form-box">
+                <div className="col-sm-12 d-flex justify-content-center">
+                  <h1>
+                    <strong>Registrarse</strong>
+                  </h1>
+                </div>
                 <div className="form-bottom">
-                  <form
-                    role="form"
-                    className="login-form "
-                    onSubmit={this.handleSignUp}
-                  >
+                  <form className="login-form " onSubmit={this.handleSignUp}>
                     <div className="form-group">
                       <label className="sr-only">Usuario</label>
                       <input
