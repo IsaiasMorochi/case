@@ -7,7 +7,7 @@ import Trash from '../views/Trash'
 import Tools from '../views/Tools'
 import NewDiagram from '../views/NewDiagram'
 import RealTime from '../views/RealTime'
-
+import {Face, Share, FormatShapes, DeleteSweep, Settings} from '@material-ui/icons'
 const appRoutes = [
     {
         path: '/login',

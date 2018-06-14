@@ -29,7 +29,7 @@ class Colaborations extends React.Component {
         })
     }
       componentDidMount(){
-        app.database().ref('mensajes4/').on('value', snap =>{
+        app.database().ref('chat/').on('value', snap =>{
          const mensajesRecientes = snap.val();
          if(mensajesRecientes!== null){
           
@@ -90,7 +90,7 @@ class Colaborations extends React.Component {
               data: { text },
               id: app.auth().currentUser.uid,
           }
-          app.database().ref('mensajes4/').push(mensaje)        
+          app.database().ref('chat/').push(mensaje)        
           this.setState({
               messageList: [...this.state.messageList, mensaje]
           })

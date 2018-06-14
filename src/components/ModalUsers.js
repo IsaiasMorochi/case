@@ -18,9 +18,16 @@ class ModalUsers extends React.Component {
     
     componentWillMount() {
         const currentuser = app.auth().currentUser
+        console.log("===========current============")
+        console.log(currentuser.email)
+        console.log("===========current============")        
         app.database().ref('/').once('value',(users)=>{
             users.forEach((user=>{
-                if(user.key!="collaborator_diagram"){
+                console.log("===========base============")                
+                console.log(user.val())
+                console.log("===========base============")
+                
+                if(user.key!="collaborator_diagram" && user.key!="chat"){
                     if(currentuser.email!=user.val().userinfo.email){
                         this.setState({
                             users: [...this.state.users, user]
@@ -45,8 +52,6 @@ class ModalUsers extends React.Component {
     }
 
     render() {
-        console.log("renderizado")
-        console.log(this.props.openModal)
         return (
         <div>
             <Dialog
