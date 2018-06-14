@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="theme-color" content="#000000">
-  <!--
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+    <!--
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
     -->
-  <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
-  <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
-  <!--
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
       Only files inside the `public` folder can be referenced from the HTML.
@@ -91,12 +90,12 @@
 
       const downXML = document.getElementById('downXML')
       console.log(downXML)
-      downXML.onclick = () => {
-        var datos = obtenerDatos();
-        descargarArchivo(generarXml(datos), 'archivo.xml');
+      downXML.onclick = ()=>{
+          var datos = obtenerDatos();
+          descargarArchivo(generarXml(datos), 'archivo.xml');
       }
       function obtenerDatos() {
-        return {
+        return { 
           XML: app.getCurrentXMLString(),
         };
       };
@@ -209,87 +208,22 @@
               date: getDate(),
               xml: current
             }
-          } else { console.log("es null") }
-        }
-      
-      //////////*****AREA DE FUNCIONES***//////////
-      function loadOnInit() {
-        firebasedb.ref(user.uid + '/collaborative/' + user.user.uid + '/1').once('value').then(element => {
-          console.log(element.val())
-          afterInit = true
-          if (element.val().diagram) app.setXML((new DOMParser()).parseFromString(element.val().diagram, "text/xml"))
-          else console.log("vacio")
-        }).catch(error => {
-          console.log("error on init", error)
-        })
-      }
-      function saveDiagram() {
-        firebasedb.ref(user.uid + '/collaborative/1').set({
-          id: 1,
-          diagram: current
-        })
-      }
-      function getDate() {
-        var hoy = new Date();
-        var dd = hoy.getDate();
-        var mm = hoy.getMonth() + 1; //hoy es 0!
-        var yyyy = hoy.getFullYear();
-        if (dd < 10) dd = '0' + dd
-        if (mm < 10) mm = '0' + mm
-        hoy = mm + '/' + dd + '/' + yyyy;
-        return hoy;
-      }
-      //////////*****CRUD DE DIAGRAMAS***//////////
-      function getDiagrams() {
-        firebasedb.ref(user.uid + '/diagrams').once('value').then(diagrams => {
-          diagrams.forEach(diagram => {
-            console.log(diagram.val())
-          });
-        })
-      }
-
-      function insertDiagram(params) {
-        firebasedb.ref(user.uid + '/diagrams').push(params)
-      }
-      //////////*****AREA DE ELEMENTOS***//////////
-      var canvas = document.getElementById("canvas_diagram");
-      canvas.onclick = () => {
-        console.log('clock canvas')
-        current = app.getCurrentXMLString()
-        if (window.location.pathname != '/newdiagram') saveDiagram()
-      }
-
-      ////savediagram button
-      const btnsave = document.getElementById('btnsavediagram')
-      btnsave.onclick = (event) => {
-        const name = document.getElementById('diagram_name').value
-        const description = document.getElementById('diagram_description').value
-        const diagramtype = document.getElementById('diagram_type').value
-
-        if (name && description && diagramtype) {
-          const params = {
-            name,
-            description,
-            diagramtype,
-            date: getDate(),
-            xml: current
+            insertDiagram(params)
+          }else{
+            alert('meta todos los datos')
           }
-          insertDiagram(params)
-        } else {
-          alert('meta todos los datos')
         }
+
+        const btn = document.getElementById('btn') ///btn de pruebas
+        btn.onclick = (e)=>{
+          //getDiagrams()
+        }
+        
+       
       }
-
-      const btn = document.getElementById('btn') ///btn de pruebas
-      btn.onclick = (e) => {
-        //getDiagrams()
-      }
-
-
-    }
-  </script>
-
-  <!--
+    </script>
+    
+    <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
 
@@ -299,12 +233,8 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
-    crossorigin="anonymous"></script>
-</body>
-
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+  </body>
 </html>
