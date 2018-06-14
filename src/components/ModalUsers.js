@@ -45,6 +45,8 @@ class ModalUsers extends React.Component {
     }
 
     render() {
+        console.log("renderizado")
+        console.log(this.props.openModal)
         return (
         <div>
             <Dialog
