@@ -1,5 +1,5 @@
 import React from 'react'
-import Diagram from '../components/Diagram'
+import DiagramCard from '../components/DiagramCard'
 import MenuItem from '../components/MenuItem'
 import {render} from 'react-dom'
 import {Launcher} from '../components/Chat/index'
@@ -7,14 +7,27 @@ import app from '../base'
 
 class Colaborations extends React.Component {
   
-    constructor() {
-        super();        
+    constructor(props) {
+        super(props);        
         this.state = {
-          messageList: []
+          messageList: [],
+          collaborations: [],
           
         };
       }
-
+      componentWillMount() {
+        const currentuser = app.auth().currentUser
+        console.log(currentuser.uid)
+        app.database().ref('/collaborator_diagram').once('value').then((elements)=>{
+            elements.forEach(element=>{
+                if(element.val().collaborator==currentuser.uid){
+                    this.setState({
+                        collaborations:[...this.state.collaborations, element.val()]
+                    })
+                }
+            })
+        })
+    }
       componentDidMount(){
         app.database().ref('mensajes4/').on('value', snap =>{
          const mensajesRecientes = snap.val();
@@ -88,17 +101,19 @@ class Colaborations extends React.Component {
       
     render(){
         return (          
-        <div>
-        <Diagram />    
-        <Launcher
-        agentProfile={{
-          teamName: 'Chat',
-          imageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png'
-        }}
-        onMessageWasSent={this._onMessageWasSent.bind(this)}
-        messageList={this.state.messageList}
-        showEmoji
-        />
+        <div className="row">
+            {this.state.collaborations.map((coll, index)=>{
+                return <DiagramCard key={index} collaboration={coll} image="http://backgroundcheckall.com/wp-content/uploads/2017/12/background-material-design-10.jpg" />
+            })}
+            <Launcher
+            agentProfile={{
+            teamName: 'Chat',
+            imageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png'
+            }}
+            onMessageWasSent={this._onMessageWasSent.bind(this)}
+            messageList={this.state.messageList}
+            showEmoji
+            />
         </div>
         )
     }
