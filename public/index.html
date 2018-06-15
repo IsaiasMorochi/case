@@ -69,31 +69,31 @@
         console.log("index",JSON.parse(localStorage.getItem('user')).user)
         console.log("===============================================")
         var user = JSON.parse(localStorage.getItem('user')).user
-        console.log(user.uid)
         var firebasedb = initfirebase.database()
-        ///load diagram////
-        // if(window.location.pathname=='/realtime'){
-        //   console.log("EN REALPATH")
-        //   loadOnInit();
-        // }else{
-        //   "no en REALPATH"
-        // }
+        
          //////////***Botones de descarga Imagen y XML****///////////
          const downImage = document.getElementById('downImage')
         downImage.onclick = ()=>{
         var canvasDiagram = document.getElementById('canvas_diagram')
-        console.log(canvasDiagram)
         var dato = canvasDiagram.toDataURL("image/jpeg")
         dato = dato.replace("image/jpeg", "image/octet-stream")
         document.location.href = dato
       }
 
       const downXML = document.getElementById('downXML')
-      console.log(downXML)
       downXML.onclick = ()=>{
           var datos = obtenerDatos();
           descargarArchivo(generarXml(datos), 'archivo.xml');
       }
+      
+      const btnimportxml = document.getElementById('btnimportxml')
+      const xmlimport = document.getElementById('xmlimport')
+      btnimportxml.onclick = ()=>{
+        current = xmlimport.value
+        app._delDiagram()
+        app.setXML((new DOMParser()).parseFromString(current, "text/xml"))
+      }
+
       function obtenerDatos() {
         return { 
           XML: app.getCurrentXMLString(),
@@ -140,14 +140,6 @@
           })
         }
         //////////*****AREA DE FUNCIONES***//////////
-        function loadOnInit() {
-          firebasedb.ref(collaborative.owner+'/diagrams/'+collaborative.diagram).once('value').then(element=>{
-            if(element.val().xml) app.setXML((new DOMParser()).parseFromString(element.val().xml, "text/xml"))
-              else console.log("vacio")
-          }).catch(error=>{
-            console.log("error on init", error)
-          })
-        }
         function saveDiagram(){
           firebasedb.ref(collaborative.owner+'/diagrams/'+collaborative.diagram).once('value').then(diagram=>{
             return diagram.val()
@@ -184,6 +176,7 @@
 
         function insertDiagram(params) {
           firebasedb.ref(user.uid+'/diagrams').push(params)
+          window.location.href="/"
         }
         //////////*****AREA DE ELEMENTOS***//////////
         var canvas = document.getElementById("canvas_diagram");

@@ -99,9 +99,6 @@ function UserProfile({ ...props }) {
             </div>
           </div>
       </CardContent>
-      <CardActions className={classes.textAlign + " " + classes.cardActions}>
-        {footer}
-      </CardActions>
     </Card>
   );
 }

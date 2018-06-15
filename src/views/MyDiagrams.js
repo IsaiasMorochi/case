@@ -14,17 +14,15 @@ class MyDiagrams extends React.Component {
 
   componentWillMount() {
     var user = app.auth().currentUser;
-    app
-      .database()
-      .ref(user.uid + "/diagrams")
-      .once("value")
-      .then(diagrams => {
+    app.database().ref(user.uid + "/diagrams").once("value").then(diagrams => {
         diagrams.forEach(diagram => {
-          this.setState({
-            diagrams: [...this.state.diagrams, diagram]
-          });
+            if(!diagram.val().inactive){
+            this.setState({
+                diagrams: [...this.state.diagrams, diagram]
+            });
+            }
         });
-      });
+    });
   }
 
     _userParams(diagramid){
@@ -43,11 +41,12 @@ class MyDiagrams extends React.Component {
                 <Button onClick={()=>{window.location.href = '/newdiagram'}} variant="raised" color="primary" aria-label="add" style={{ backgroundColor: "#3abdfc", width: "100%" }} >
                     <AddIcon />
                 </Button>
+                
                 </div>
                 <div className="col-lg-12 col-md-12 col-sm-12">
-                    <div className="row">
+                    <div className="row" style={{paddingTop:'3em'}}>
                         {this.state.diagrams.map((diagram, index)=>{
-                            return <CardDiagram key={index} collaboration={this._userParams(diagram.key)} diagramid={diagram.key} name={diagram.val().name} date={diagram.val().date} description={diagram.val().description} image="http://backgroundcheckall.com/wp-content/uploads/2017/12/background-material-design-10.jpg" />
+                            return <CardDiagram key={index} history={this.props.history} collaboration={this._userParams(diagram.key)} diagramid={diagram.key} name={diagram.val().name} date={diagram.val().date} description={diagram.val().description} image="https://www.apollo-formation.com/wp-content/uploads/Unified_Modeling_Language-250x250.png" />
                         })}
                     </div>
                 </div>

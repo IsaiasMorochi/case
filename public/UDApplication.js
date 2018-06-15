@@ -77,6 +77,7 @@ Application.prototype._generateStructure = function (b) {
   c = document.createElement("canvas");
   c.setAttribute("class", "ud_diagram_canvas");
   c.setAttribute("id", "canvas_diagram");
+  c.setAttribute("style", "background-color:#D6EAF8;");
   c.width = this._width;
   c.height = this._height;
   j.appendChild(c);
@@ -257,7 +258,7 @@ Application.prototype._generateGeneralMenu = function () {
   var e = this;
   var g = this._tools_div;
   var c = document.createElement("h1");
-  var f = document.createTextNode("Actions");
+  var f = document.createTextNode("Acciones");
   var b = document.createElement("img");
   b.setAttribute("src", "img/app/vertical_flow.png");
   c.appendChild(b);
@@ -274,70 +275,70 @@ Application.prototype._generateGeneralMenu = function () {
       this.childNodes[0].setAttribute("src", "img/app/horizontal_flow.png")
     }
   };
-  this._addMenuItem(this._tools_ul1, "Export/Import to xml", function (m) {
-    var p = this;
-    this._active = true;
-    var h = document.createElement("div");
-    var j = document.createElement("form");
-    var k = document.createElement("textarea");
-    var u = document.createElement("input");
-    var q = document.createElement("input");
-    var t = document.createElement("input");
-    var s = document.createElement("input");
-    h.className = "ud_popup";
-    k.setAttribute("rows", 15);
-    k.setAttribute("cols", 90);
-    u.setAttribute("type", "submit");
-    u.setAttribute("value", "Import");
-    q.setAttribute("type", "submit");
-    q.setAttribute("value", "Export All");
-    t.setAttribute("type", "submit");
-    t.setAttribute("value", "Export Current Diagram");
-    s.setAttribute("type", "submit");
-    s.setAttribute("value", "x");
-    var n = function (v) {
-      m.setXMLString(k.value);
-      document.body.removeChild(h)
-    };
-    var r = function (v) {
-      k.value = m.getXMLString();
-      k.select()
-    };
-    var l = function (v) {
-      k.value = m.getCurrentXMLString();
-      k.select()
-    };
-    var o = function (v) {
-      document.body.removeChild(h)
-    };
-    j.onsubmit = function () {
-      return false
-    };
-    q.addEventListener("click", r, false);
-    t.addEventListener("click", l, false);
-    u.addEventListener("click", n, false);
-    s.addEventListener("click", o, false);
-    j.appendChild(q);
-    j.appendChild(t);
-    j.appendChild(u);
-    j.appendChild(s);
-    j.appendChild(document.createElement("br"));
-    j.appendChild(k);
-    h.appendChild(j);
-    document.body.appendChild(h);
-    k.focus();
-    h.style.top = (window.innerHeight - j.offsetHeight) / 2 + "px";
-    h.style.left = (window.innerWidth - j.offsetWidth) / 2 + "px"
-  }, 0, "import_export");
-  this._addMenuItem(this._tools_ul1, "Generate image (png)", function (k, j) {
-    if (k._selected) {
-      var h = window.open(k._getDiagramImage(), "diagramImage", "height=" + (k._height + 70) + ",width=" + (k._width + 20));
-      h.focus()
-    } else {
-      alert("You did not select any diagram")
-    }
-  }, 0, "generate_image");
-  this._addMenuItem(this._tools_ul1, "Delete object", function (l, h, p) {
+  // this._addMenuItem(this._tools_ul1, "Export/Import to xml", function (m) {
+  //   var p = this;
+  //   this._active = true;
+  //   var h = document.createElement("div");
+  //   var j = document.createElement("form");
+  //   var k = document.createElement("textarea");
+  //   var u = document.createElement("input");
+  //   var q = document.createElement("input");
+  //   var t = document.createElement("input");
+  //   var s = document.createElement("input");
+  //   h.className = "ud_popup";
+  //   k.setAttribute("rows", 15);
+  //   k.setAttribute("cols", 90);
+  //   u.setAttribute("type", "submit");
+  //   u.setAttribute("value", "Import");
+  //   q.setAttribute("type", "submit");
+  //   q.setAttribute("value", "Export All");
+  //   t.setAttribute("type", "submit");
+  //   t.setAttribute("value", "Export Current Diagram");
+  //   s.setAttribute("type", "submit");
+  //   s.setAttribute("value", "x");
+  //   var n = function (v) {
+  //     m.setXMLString(k.value);
+  //     document.body.removeChild(h)
+  //   };
+  //   var r = function (v) {
+  //     k.value = m.getXMLString();
+  //     k.select()
+  //   };
+  //   var l = function (v) {
+  //     k.value = m.getCurrentXMLString();
+  //     k.select()
+  //   };
+  //   var o = function (v) {
+  //     document.body.removeChild(h)
+  //   };
+  //   j.onsubmit = function () {
+  //     return false
+  //   };
+  //   q.addEventListener("click", r, false);
+  //   t.addEventListener("click", l, false);
+  //   u.addEventListener("click", n, false);
+  //   s.addEventListener("click", o, false);
+  //   j.appendChild(q);
+  //   j.appendChild(t);
+  //   j.appendChild(u);
+  //   j.appendChild(s);
+  //   j.appendChild(document.createElement("br"));
+  //   j.appendChild(k);
+  //   h.appendChild(j);
+  //   document.body.appendChild(h);
+  //   k.focus();
+  //   h.style.top = (window.innerHeight - j.offsetHeight) / 2 + "px";
+  //   h.style.left = (window.innerWidth - j.offsetWidth) / 2 + "px"
+  // }, 0, "import_export");
+  // this._addMenuItem(this._tools_ul1, "Generate image (png)", function (k, j) {
+  //   if (k._selected) {
+  //     var h = window.open(k._getDiagramImage(), "diagramImage", "height=" + (k._height + 70) + ",width=" + (k._width + 20));
+  //     h.focus()
+  //   } else {
+  //     alert("You did not select any diagram")
+  //   }
+  // }, 0, "generate_image");
+  this._addMenuItem(this._tools_ul1, "Eliminar Componente", function (l, h, p) {
     var n = l.getElementByPoint(h, p);
     if (n) {
       var o = false;
@@ -355,197 +356,197 @@ Application.prototype._generateGeneralMenu = function () {
       ApplicationValues.dialog._cancelable = true
     }
     if (n != null && n instanceof Element) {
-      ApplicationValues.dialog.show(function () {
+      // ApplicationValues.dialog.show(function () {
         l.delElement(n);
         l.draw();
         _delProfileElement(n)
-      })
+      // })
     }
   }, 1, "delete_object");
-  this._addMenuItem(this._tools_ul1, "Modify color", function (x) {
-    var r = ApplicationValues.element_color;
-    var z = ApplicationValues.element_color.split("#")[1];
-    var C = new Array(parseInt(z.slice(0, 2), 16), parseInt(z.slice(2, 4), 16), parseInt(z.slice(4, 6), 16));
-    var A = document.createElement("div");
-    A.className = "ud_popupColor";
-    var J = document.createElement("div");
-    J.setAttribute("id", "divBlock1");
-    var I = document.createElement("div");
-    I.setAttribute("id", "divBlock2");
-    var n = document.createElement("div");
-    n.setAttribute("id", "colorHtml");
-    n.style.color = "#ffffff";
-    var h = document.createElement("div");
-    h.setAttribute("id", "red");
-    var y = document.createElement("canvas");
-    y.setAttribute("id", "R");
-    y.width = 150;
-    y.height = 20;
-    h.appendChild(y);
-    var j = y.getContext("2d");
-    var s = document.createElement("div");
-    s.setAttribute("id", "green");
-    var B = document.createElement("canvas");
-    B.setAttribute("id", "G");
-    B.width = 150;
-    B.height = 20;
-    s.appendChild(B);
-    var t = B.getContext("2d");
-    var v = document.createElement("div");
-    v.setAttribute("id", "blue");
-    var D = document.createElement("canvas");
-    D.setAttribute("id", "B");
-    D.width = 150;
-    D.height = 20;
-    v.appendChild(D);
-    var w = D.getContext("2d");
-    var u = document.createElement("div");
-    u.setAttribute("id", "divSelectColor");
-    var G = document.createElement("canvas");
-    G.setAttribute("id", "selectColor");
-    G.width = 90;
-    G.height = 90;
-    u.appendChild(G);
-    var l = G.getContext("2d");
-    var m = document.createElement("form");
-    var K = document.createElement("input");
-    K.setAttribute("type", "submit");
-    K.setAttribute("value", "ok");
-    var H = document.createElement("input");
-    H.setAttribute("type", "submit");
-    H.setAttribute("value", "cancel");
-    var F = function (L) {
-      document.body.removeChild(A)
-    };
-    var q = function (L) {
-      ApplicationValues.element_color = r;
-      document.body.removeChild(A)
-    };
-    K.addEventListener("click", F, false);
-    H.addEventListener("click", q, false);
-    m.onsubmit = function () {
-      return false
-    };
-    K.focus();
-    m.appendChild(K);
-    m.appendChild(H);
-    J.appendChild(n);
-    J.appendChild(h);
-    J.appendChild(s);
-    J.appendChild(v);
-    J.appendChild(m);
-    A.appendChild(J);
-    I.appendChild(u);
-    I.appendChild(document.createElement("div"));
-    A.appendChild(I);
-    var E = function (N, M, O, L) {
-      if (O == 0) {
-        O = 0.1
-      } else {
-        if (O == 120) {
-          O = 119.9
-        }
-      }
-      M.save();
-      M.font = "12px monospace";
-      M.textBaseline = "middle";
-      M.fillStyle = "#ffffff";
-      M.fillText(N.getAttribute("id"), 0, N.height / 2);
-      M.restore();
-      M.save();
-      M.beginPath();
-      M.fillStyle = L;
-      M.fillRect(20, 0, parseInt(N.width) - 50, y.height);
-      M.closePath();
-      M.restore();
-      M.fillStyle = "#000000";
-      M.beginPath();
-      M.arc(20 + (O * 100) / 255, parseInt(N.height) / 2, 4, 0, Math.PI * 2, true);
-      M.closePath();
-      M.fill();
-      M.save();
-      M.font = "12px monospace";
-      M.textBaseline = "middle";
-      M.fillStyle = "#ffffff";
-      M.fillText(parseInt(O), 125, N.height / 2);
-      M.restore()
-    };
-    var p = function (L) {
-      l.save();
-      l.beginPath();
-      l.fillStyle = L;
-      l.fillRect(20, 20, 80, 80);
-      l.closePath();
-      l.restore()
-    };
-    var o = function (N) {
-      var M = function (R) {
-        var P = "0123456789ABCDEF";
-        var O = parseInt(R) % 16;
-        var Q = (parseInt(R) - O) / 16;
-        hex = "" + P.charAt(Q) + P.charAt(O);
-        return hex
-      };
-      var L = M(N[0]) + M(N[1]) + M(N[2]);
-      while (n.hasChildNodes()) {
-        n.removeChild(n.lastChild)
-      }
-      n.appendChild(document.createTextNode("#"));
-      n.appendChild(document.createTextNode(L));
-      ApplicationValues.element_color = "#" + L
-    };
-    var k = function (N) {
-      var M = N.pageX - A.offsetLeft - this.offsetLeft;
-      var L = N.pageY - this.offsetTop;
-      if (this.getAttribute("id") == "red") {
-        C[0] = ((M - 20) * 255) / 100;
-        if (C[0] > 255) {
-          C[0] = 255
-        }
-        if (C[0] < 0) {
-          C[0] = 0
-        }
-        j.clearRect(0, 0, parseInt(y.width), y.height);
-        E(y, j, C[0], "#ff0000")
-      }
-      if (this.getAttribute("id") == "green") {
-        C[1] = ((M - 20) * 255) / 100;
-        if (C[1] > 255) {
-          C[1] = 255
-        }
-        if (C[1] < 0) {
-          C[1] = 0
-        }
-        t.clearRect(0, 0, parseInt(B.width), B.height);
-        E(B, t, C[1], "#00ff00")
-      }
-      if (this.getAttribute("id") == "blue") {
-        C[2] = ((M - 20) * 255) / 100;
-        if (C[2] > 255) {
-          C[2] = 255
-        }
-        if (C[2] < 0) {
-          C[2] = 0
-        }
-        w.clearRect(0, 0, parseInt(D.width), D.height);
-        E(D, w, C[2], "#0000ff")
-      }
-      o(C);
-      p(ApplicationValues.element_color);
-      x.updateBackgroundElementDiagram()
-    };
-    E(y, j, C[0], "#ff0000");
-    E(B, t, C[1], "#00ff00");
-    E(D, w, C[2], "#0000ff");
-    p(ApplicationValues.element_color);
-    o(C);
-    h.addEventListener("mousedown", k, false);
-    s.addEventListener("mousedown", k, false);
-    v.addEventListener("mousedown", k, false);
-    document.body.appendChild(A);
-    A.style.top = (window.innerHeight - parseInt(A.offsetHeight)) / 2 + "px";
-    A.style.left = (window.innerWidth - parseInt(A.offsetWidth)) / 2 + "px"
-  }, 0, "modify_color");
+  // this._addMenuItem(this._tools_ul1, "Modify color", function (x) {
+  //   var r = ApplicationValues.element_color;
+  //   var z = ApplicationValues.element_color.split("#")[1];
+  //   var C = new Array(parseInt(z.slice(0, 2), 16), parseInt(z.slice(2, 4), 16), parseInt(z.slice(4, 6), 16));
+  //   var A = document.createElement("div");
+  //   A.className = "ud_popupColor";
+  //   var J = document.createElement("div");
+  //   J.setAttribute("id", "divBlock1");
+  //   var I = document.createElement("div");
+  //   I.setAttribute("id", "divBlock2");
+  //   var n = document.createElement("div");
+  //   n.setAttribute("id", "colorHtml");
+  //   n.style.color = "#ffffff";
+  //   var h = document.createElement("div");
+  //   h.setAttribute("id", "red");
+  //   var y = document.createElement("canvas");
+  //   y.setAttribute("id", "R");
+  //   y.width = 150;
+  //   y.height = 20;
+  //   h.appendChild(y);
+  //   var j = y.getContext("2d");
+  //   var s = document.createElement("div");
+  //   s.setAttribute("id", "green");
+  //   var B = document.createElement("canvas");
+  //   B.setAttribute("id", "G");
+  //   B.width = 150;
+  //   B.height = 20;
+  //   s.appendChild(B);
+  //   var t = B.getContext("2d");
+  //   var v = document.createElement("div");
+  //   v.setAttribute("id", "blue");
+  //   var D = document.createElement("canvas");
+  //   D.setAttribute("id", "B");
+  //   D.width = 150;
+  //   D.height = 20;
+  //   v.appendChild(D);
+  //   var w = D.getContext("2d");
+  //   var u = document.createElement("div");
+  //   u.setAttribute("id", "divSelectColor");
+  //   var G = document.createElement("canvas");
+  //   G.setAttribute("id", "selectColor");
+  //   G.width = 90;
+  //   G.height = 90;
+  //   u.appendChild(G);
+  //   var l = G.getContext("2d");
+  //   var m = document.createElement("form");
+  //   var K = document.createElement("input");
+  //   K.setAttribute("type", "submit");
+  //   K.setAttribute("value", "ok");
+  //   var H = document.createElement("input");
+  //   H.setAttribute("type", "submit");
+  //   H.setAttribute("value", "cancel");
+  //   var F = function (L) {
+  //     document.body.removeChild(A)
+  //   };
+  //   var q = function (L) {
+  //     ApplicationValues.element_color = r;
+  //     document.body.removeChild(A)
+  //   };
+  //   K.addEventListener("click", F, false);
+  //   H.addEventListener("click", q, false);
+  //   m.onsubmit = function () {
+  //     return false
+  //   };
+  //   K.focus();
+  //   m.appendChild(K);
+  //   m.appendChild(H);
+  //   J.appendChild(n);
+  //   J.appendChild(h);
+  //   J.appendChild(s);
+  //   J.appendChild(v);
+  //   J.appendChild(m);
+  //   A.appendChild(J);
+  //   I.appendChild(u);
+  //   I.appendChild(document.createElement("div"));
+  //   A.appendChild(I);
+  //   var E = function (N, M, O, L) {
+  //     if (O == 0) {
+  //       O = 0.1
+  //     } else {
+  //       if (O == 120) {
+  //         O = 119.9
+  //       }
+  //     }
+  //     M.save();
+  //     M.font = "12px monospace";
+  //     M.textBaseline = "middle";
+  //     M.fillStyle = "#ffffff";
+  //     M.fillText(N.getAttribute("id"), 0, N.height / 2);
+  //     M.restore();
+  //     M.save();
+  //     M.beginPath();
+  //     M.fillStyle = L;
+  //     M.fillRect(20, 0, parseInt(N.width) - 50, y.height);
+  //     M.closePath();
+  //     M.restore();
+  //     M.fillStyle = "#000000";
+  //     M.beginPath();
+  //     M.arc(20 + (O * 100) / 255, parseInt(N.height) / 2, 4, 0, Math.PI * 2, true);
+  //     M.closePath();
+  //     M.fill();
+  //     M.save();
+  //     M.font = "12px monospace";
+  //     M.textBaseline = "middle";
+  //     M.fillStyle = "#ffffff";
+  //     M.fillText(parseInt(O), 125, N.height / 2);
+  //     M.restore()
+  //   };
+  //   var p = function (L) {
+  //     l.save();
+  //     l.beginPath();
+  //     l.fillStyle = L;
+  //     l.fillRect(20, 20, 80, 80);
+  //     l.closePath();
+  //     l.restore()
+  //   };
+  //   var o = function (N) {
+  //     var M = function (R) {
+  //       var P = "0123456789ABCDEF";
+  //       var O = parseInt(R) % 16;
+  //       var Q = (parseInt(R) - O) / 16;
+  //       hex = "" + P.charAt(Q) + P.charAt(O);
+  //       return hex
+  //     };
+  //     var L = M(N[0]) + M(N[1]) + M(N[2]);
+  //     while (n.hasChildNodes()) {
+  //       n.removeChild(n.lastChild)
+  //     }
+  //     n.appendChild(document.createTextNode("#"));
+  //     n.appendChild(document.createTextNode(L));
+  //     ApplicationValues.element_color = "#" + L
+  //   };
+  //   var k = function (N) {
+  //     var M = N.pageX - A.offsetLeft - this.offsetLeft;
+  //     var L = N.pageY - this.offsetTop;
+  //     if (this.getAttribute("id") == "red") {
+  //       C[0] = ((M - 20) * 255) / 100;
+  //       if (C[0] > 255) {
+  //         C[0] = 255
+  //       }
+  //       if (C[0] < 0) {
+  //         C[0] = 0
+  //       }
+  //       j.clearRect(0, 0, parseInt(y.width), y.height);
+  //       E(y, j, C[0], "#ff0000")
+  //     }
+  //     if (this.getAttribute("id") == "green") {
+  //       C[1] = ((M - 20) * 255) / 100;
+  //       if (C[1] > 255) {
+  //         C[1] = 255
+  //       }
+  //       if (C[1] < 0) {
+  //         C[1] = 0
+  //       }
+  //       t.clearRect(0, 0, parseInt(B.width), B.height);
+  //       E(B, t, C[1], "#00ff00")
+  //     }
+  //     if (this.getAttribute("id") == "blue") {
+  //       C[2] = ((M - 20) * 255) / 100;
+  //       if (C[2] > 255) {
+  //         C[2] = 255
+  //       }
+  //       if (C[2] < 0) {
+  //         C[2] = 0
+  //       }
+  //       w.clearRect(0, 0, parseInt(D.width), D.height);
+  //       E(D, w, C[2], "#0000ff")
+  //     }
+  //     o(C);
+  //     p(ApplicationValues.element_color);
+  //     x.updateBackgroundElementDiagram()
+  //   };
+  //   E(y, j, C[0], "#ff0000");
+  //   E(B, t, C[1], "#00ff00");
+  //   E(D, w, C[2], "#0000ff");
+  //   p(ApplicationValues.element_color);
+  //   o(C);
+  //   h.addEventListener("mousedown", k, false);
+  //   s.addEventListener("mousedown", k, false);
+  //   v.addEventListener("mousedown", k, false);
+  //   document.body.appendChild(A);
+  //   A.style.top = (window.innerHeight - parseInt(A.offsetHeight)) / 2 + "px";
+  //   A.style.left = (window.innerWidth - parseInt(A.offsetWidth)) / 2 + "px"
+  // }, 0, "modify_color");
   var a = _genericMenu;
   var d;
   for (d in a) {
@@ -559,7 +560,7 @@ Application.prototype._generateGeneralMenu = function () {
   }
   g = this._tools_div;
   c = document.createElement("h1");
-  f = document.createTextNode("Diagram elements");
+  f = document.createTextNode("Elementos del Diagrama");
   c.onclick = function () {
     var j = document.getElementById("ud_tools_ul2");
     var h;
@@ -778,7 +779,7 @@ Application.prototype.setXMLString = function (a) {
 };
 _acceptedDiagrams.push("UMLUseCaseDiagram");
 _acceptedElementsUML.push(["Actor", "UMLActor"], ["Use Case", "UMLUseCase"], ["UseCaseExtended", "UMLUseCaseExtended"], ["UseCaseClassifier", "UMLUseCaseClassifier"], ["System", "UMLSystem"], ["SubSystem", "UMLSubSystem"]);
-_genericMenu.push(["New use case diagram", function (a) {
+_genericMenu.push(["Diagrama de Caso de Uso", function (a) {
   a.addDiagram(new UMLUseCaseDiagram({
     backgroundNodes: ApplicationValues.element_color
   }))
@@ -792,7 +793,7 @@ _specificMenu.UMLUseCaseDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLActor"],
-  ["Use case", function (b, a, d) {
+  ["Caso de Uso", function (b, a, d) {
     var c = new UMLUseCase({
       x: a,
       y: d,
@@ -800,7 +801,7 @@ _specificMenu.UMLUseCaseDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLUseCase"],
-  ["UseCaseExtended", function (b, a, d) {
+  ["Caso de Uso Extendido", function (b, a, d) {
     var c = new UMLUseCaseExtended({
       x: a,
       y: d,
@@ -808,7 +809,7 @@ _specificMenu.UMLUseCaseDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLUseCaseExtended"],
-  ["UseCaseClassifier", function (b, a, d) {
+  ["Clasificador de caso de USo", function (b, a, d) {
     var c = new UMLUseCaseClassifier({
       x: a,
       y: d,
@@ -816,7 +817,7 @@ _specificMenu.UMLUseCaseDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLUseCaseClassifier"],
-  ["System", function (b, a, d) {
+  ["Sistema", function (b, a, d) {
     var c = new UMLSystem({
       x: a,
       y: d,
@@ -824,7 +825,7 @@ _specificMenu.UMLUseCaseDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLSystem"],
-  ["SubSystem", function (b, a, d) {
+  ["Subsistema", function (b, a, d) {
     var c = new UMLSubSystem({
       x: a,
       y: d,
@@ -832,7 +833,7 @@ _specificMenu.UMLUseCaseDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLSubSystem"],
-  ["Communication", function (c, b, e, a, d) {
+  ["Asociacion", function (c, b, e, a, d) {
     c.addRelationFromPoints(new UMLCommunication(), b, e, a, d)
   }, 2, "UMLCommunication"],
   ["Extend", function (c, b, e, a, d) {
@@ -856,19 +857,19 @@ _specificMenu.UMLUseCaseDiagram = [
       }
     }
   }, 2, "UMLGeneralization"],
-  ["Generalization set", function (c, b, e, a, d) {
-    c.addRelationFromPoints(new UMLGeneralizationSet(), b, e, a, d)
-  }, 2, "UMLGeneralizationSet"],
+  // ["Generalization set", function (c, b, e, a, d) {
+  //   c.addRelationFromPoints(new UMLGeneralizationSet(), b, e, a, d)
+  // }, 2, "UMLGeneralizationSet"],
 ];
 _acceptedDiagrams.push("UMLClassDiagram");
 _acceptedElementsUML.push(["Class", "UMLClass"], ["Data Type", "UMLDataType"], ["Association N-ary", "UMLNAssociation"], ["Component (Class diagram)", "UMLComponent"], ["Instance", "UMLInstance"], ["Interface Extended", "UMLInterfaceExtended"], ["UMLPackage", "Package"], ["Package Container", "UMLPackageContainer"], ["Generalization Set", "UMLGeneralizationSet"]);
-_genericMenu.push(["New class diagram", function (a) {
+_genericMenu.push(["Diagrama de Clase", function (a) {
   a.addDiagram(new UMLClassDiagram({
     backgroundNodes: ApplicationValues.element_color
   }))
 }, 0, "UMLClassDiagram"]);
 _specificMenu.UMLClassDiagram = [
-  ["Package", function (b, a, d) {
+  ["Paquete", function (b, a, d) {
     var c = new UMLPackage({
       x: a,
       y: d,
@@ -876,7 +877,7 @@ _specificMenu.UMLClassDiagram = [
     }); /*http://www.jrromero.net/tools/jsUML2*/
     b.addElement(c)
   }, 1, "UMLPackage"],
-  ["Package container", function (b, a, d) {
+  ["Contenedor de Paquete", function (b, a, d) {
     var c = new UMLPackageContainer({
       x: a,
       y: d,
@@ -884,7 +885,7 @@ _specificMenu.UMLClassDiagram = [
     }); /*http://www.jrromero.net/tools/jsUML2*/
     b.addElement(c)
   }, 1, "UMLPackageContainer"],
-  ["Class", function (b, a, d) {
+  ["Clase", function (b, a, d) {
     var c = new UMLClass({
       x: a,
       y: d,
@@ -892,7 +893,7 @@ _specificMenu.UMLClassDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLClass"],
-  ["Component", function (b, a, d) {
+  ["Componente", function (b, a, d) {
     var c = new UMLComponent({
       x: a,
       y: d,
@@ -900,7 +901,7 @@ _specificMenu.UMLClassDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLComponent"],
-  ["DataType", function (b, a, d) {
+  ["Tipo de Dato", function (b, a, d) {
     var c = new UMLDataType({
       x: a,
       y: d,
@@ -908,7 +909,7 @@ _specificMenu.UMLClassDiagram = [
     }); /*http://www.jrromero.net/tools/jsUML2*/
     b.addElement(c)
   }, 1, "UMLDataType"],
-  ["Instance", function (b, a, d) {
+  ["Instancia", function (b, a, d) {
     var c = new UMLInstance({
       x: a,
       y: d,
@@ -924,15 +925,15 @@ _specificMenu.UMLClassDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLInterfaceExtended"],
-  ["N-ary association", function (b, a, d) {
-    var c = new UMLNAssociation({
-      x: a,
-      y: d,
-      stereotypes: _stereotypes
-    });
-    b.addElement(c)
-  }, 1, "UMLNAssociation"],
-  ["Generalization", function (e, d, g, c, f) {
+  // ["N-ary association", function (b, a, d) {
+  //   var c = new UMLNAssociation({
+  //     x: a,
+  //     y: d,
+  //     stereotypes: _stereotypes
+  //   });
+  //   b.addElement(c)
+  // }, 1, "UMLNAssociation"],
+  ["Generalizacion", function (e, d, g, c, f) {
     var b = e.getElementByPoint(d, g); /*http://www.jrromero.net/tools/jsUML2*/
     var a = e.getElementByPoint(c, f);
     if (b && b.getType() == "UMLGeneralizationSet") {
@@ -947,10 +948,10 @@ _specificMenu.UMLClassDiagram = [
       }
     }
   }, 2, "UMLGeneralization"],
-  ["Generalization set", function (c, b, e, a, d) {
-    c.addRelationFromPoints(new UMLGeneralizationSet(), b, e, a, d)
-  }, 2, "UMLGeneralizationSet"],
-  ["Association", function (e, d, g, c, f) {
+  // ["Generalization set", function (c, b, e, a, d) {
+  //   c.addRelationFromPoints(new UMLGeneralizationSet(), b, e, a, d)
+  // }, 2, "UMLGeneralizationSet"],
+  ["Asociacion", function (e, d, g, c, f) {
     var b = e.getElementByPoint(d, g);
     var a = e.getElementByPoint(c, f);
     if (b && b.getType() == "UMLNAssociation") {
@@ -965,40 +966,40 @@ _specificMenu.UMLClassDiagram = [
       }
     }
   }, 2, "UMLAssociation"],
-  ["Aggregation", function (c, b, e, a, d) {
+  ["Agregacion", function (c, b, e, a, d) {
     c.addRelationFromPoints(new UMLAggregation(), b, e, a, d)
   }, 2, "UMLAggregation"],
-  ["Composition", function (c, b, e, a, d) {
+  ["Composicion", function (c, b, e, a, d) {
     c.addRelationFromPoints(new UMLComposition(), b, e, a, d)
   }, 2, "UMLComposition"],
-  ["Dependency", function (c, b, e, a, d) {
+  ["Dependencia", function (c, b, e, a, d) {
     c.addRelationFromPoints(new UMLDependency(), b, e, a, d)
   }, 2, "UMLDependency"],
-  ["Realization", function (c, b, e, a, d) {
+  ["Realizacion", function (c, b, e, a, d) {
     c.addRelationFromPoints(new UMLRealization(), b, e, a, d)
   }, 2, "UMLRealization"],
-  ["Usage", function (c, b, e, a, d) {
-    c.addRelationFromPoints(new UMLUsage(), b, e, a, d)
-  }, 2, "UMLUsage"],
-  ["Package merge", function (c, b, e, a, d) {
+  // ["Usage", function (c, b, e, a, d) {
+  //   c.addRelationFromPoints(new UMLUsage(), b, e, a, d)
+  // }, 2, "UMLUsage"],
+  ["Combinar Paquete", function (c, b, e, a, d) {
     c.addRelationFromPoints(new UMLPackageMerge(), b, e, a, d)
   }, 2, "UMLPackageMerge"],
-  ["Package public import", function (c, b, e, a, d) {
-    c.addRelationFromPoints(new UMLPackagePublicImport(), b, e, a, d)
-  }, 2, "UMLPackagePublicImport"],
-  ["Package private import", function (c, b, e, a, d) {
-    c.addRelationFromPoints(new UMLPackagePrivateImport(), b, e, a, d)
-  }, 2, "UMLPackagePrivateImport"]
+  // ["Package public import", function (c, b, e, a, d) {
+  //   c.addRelationFromPoints(new UMLPackagePublicImport(), b, e, a, d)
+  // }, 2, "UMLPackagePublicImport"],
+  // ["Package private import", function (c, b, e, a, d) {
+  //   c.addRelationFromPoints(new UMLPackagePrivateImport(), b, e, a, d)
+  // }, 2, "UMLPackagePrivateImport"]
 ];
 _acceptedDiagrams.push("UMLPackageDiagram");
 _acceptedElementsUML.push(["UMLPackage", "Package"], ["Package Container", "UMLPackageContainer"]);
-_genericMenu.push(["New package diagram", function (a) {
+_genericMenu.push(["Diagrama de Paquete", function (a) {
   a.addDiagram(new UMLPackageDiagram({
     backgroundNodes: ApplicationValues.element_color
   }))
 }, 0, "UMLPackageDiagram"]);
 _specificMenu.UMLPackageDiagram = [
-  ["Package", function (b, a, d) {
+  ["Paquete", function (b, a, d) {
     var c = new UMLPackage({
       x: a,
       y: d,
@@ -1006,7 +1007,7 @@ _specificMenu.UMLPackageDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLPackage"],
-  ["Package container", function (b, a, d) {
+  ["Contenedor de Paquete", function (b, a, d) {
     var c = new UMLPackageContainer({
       x: a,
       y: d,
@@ -1014,48 +1015,48 @@ _specificMenu.UMLPackageDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLPackageContainer"],
-  ["Dependency", function (c, b, e, a, d) {
+  ["Dependencia", function (c, b, e, a, d) {
     c.addRelationFromPoints(new UMLDependency(), b, e, a, d)
   }, 2, "UMLDependency"],
-  ["Package merge", function (c, b, e, a, d) {
+  ["Combinar Paquete", function (c, b, e, a, d) {
     c.addRelationFromPoints(new UMLPackageMerge(), b, e, a, d)
   }, 2, "UMLPackageMerge"],
-  ["Package public import", function (c, b, e, a, d) {
-    c.addRelationFromPoints(new UMLPackagePublicImport(), b, e, a, d)
-  }, 2, "UMLPackagePublicImport"],
-  ["Package private import", function (c, b, e, a, d) {
-    c.addRelationFromPoints(new UMLPackagePrivateImport(), b, e, a, d)
-  }, 2, "UMLPackagePrivateImport"]
+  // ["Package public import", function (c, b, e, a, d) {
+  //   c.addRelationFromPoints(new UMLPackagePublicImport(), b, e, a, d)
+  // }, 2, "UMLPackagePublicImport"],
+  // ["Package private import", function (c, b, e, a, d) {
+  //   c.addRelationFromPoints(new UMLPackagePrivateImport(), b, e, a, d)
+  // }, 2, "UMLPackagePrivateImport"]
 ];
-_acceptedDiagrams.push("UMLInstanceDiagram");
-_acceptedElementsUML.push(["UMLInstance", "Instance"]);
-_genericMenu.push(["New instance diagram", function (a) {
-  a.addDiagram(new UMLInstanceDiagram({
-    backgroundNodes: ApplicationValues.element_color
-  }))
-}, 0, "UMLInstanceDiagram"]);
-_specificMenu.UMLInstanceDiagram = [
-  ["Instance", function (b, a, d) {
-    var c = new UMLInstance({
-      x: a,
-      y: d,
-      stereotypes: _stereotypes
-    });
-    b.addElement(c)
-  }, 1, "UMLInstance"],
-  ["Link", function (c, b, e, a, d) {
-    c.addRelationFromPoints(new UMLLink(), b, e, a, d)
-  }, 2, "UMLLink"]
-];
+// _acceptedDiagrams.push("UMLInstanceDiagram");
+// _acceptedElementsUML.push(["UMLInstance", "Instance"]);
+// _genericMenu.push(["New instance diagram", function (a) {
+//   a.addDiagram(new UMLInstanceDiagram({
+//     backgroundNodes: ApplicationValues.element_color
+//   }))
+// }, 0, "UMLInstanceDiagram"]);
+// _specificMenu.UMLInstanceDiagram = [
+//   ["Instance", function (b, a, d) {
+//     var c = new UMLInstance({
+//       x: a,
+//       y: d,
+//       stereotypes: _stereotypes
+//     });
+//     b.addElement(c)
+//   }, 1, "UMLInstance"],
+//   ["Link", function (c, b, e, a, d) {
+//     c.addRelationFromPoints(new UMLLink(), b, e, a, d)
+//   }, 2, "UMLLink"]
+// ];
 _acceptedDiagrams.push("UMLComponentDiagram");
 _acceptedElementsUML.push(["Component (Component diagram)", "UMLComComponent"], ["Interface", "UMLInterface"], ["Artifact", "UMLArtifact"], ["Class", "UMLClass"]);
-_genericMenu.push(["New component diagram", function (a) {
+_genericMenu.push(["Diagrama de Componente", function (a) {
   a.addDiagram(new UMLComponentDiagram({
     backgroundNodes: ApplicationValues.element_color
   }))
 }, 0, "UMLComponentDiagram"]);
 _specificMenu.UMLComponentDiagram = [
-  ["Package", function (b, a, d) {
+  ["Paquete", function (b, a, d) {
     var c = new UMLPackage({
       x: a,
       y: d,
@@ -1063,7 +1064,7 @@ _specificMenu.UMLComponentDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLPackage"],
-  ["Package container", function (b, a, d) {
+  ["Contenedor de Paquete", function (b, a, d) {
     var c = new UMLPackageContainer({
       x: a,
       y: d,
@@ -1071,7 +1072,7 @@ _specificMenu.UMLComponentDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLPackageContainer"],
-  ["Artifact", function (b, a, d) {
+  ["Artefacto", function (b, a, d) {
     var c = new UMLArtifact({
       x: a,
       y: d,
@@ -1079,7 +1080,7 @@ _specificMenu.UMLComponentDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLArtifact"],
-  ["Class", function (b, a, d) {
+  ["Clase", function (b, a, d) {
     var c = new UMLClass({
       x: a,
       y: d,
@@ -1087,7 +1088,7 @@ _specificMenu.UMLComponentDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLClass"],
-  ["Component", function (b, a, d) {
+  ["Componente", function (b, a, d) {
     var c = new UMLComComponent({
       x: a,
       y: d,
@@ -1095,7 +1096,7 @@ _specificMenu.UMLComponentDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLComponent"],
-  ["Add Port", function (b, a, e) {
+  ["Añadir Puerto", function (b, a, e) {
     var d = b.getElementByPoint(a, e);
     if (d != null && d.getType() == "UMLComComponent") {
       var c = new UMLPort({
@@ -1112,32 +1113,32 @@ _specificMenu.UMLComponentDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLInterface"],
-  ["Interface (extended notation)", function (b, a, d) {
-    var c = new UMLInterfaceExtended({
-      x: a,
-      y: d,
-      stereotypes: _stereotypes
-    });
-    b.addElement(c)
-  }, 1, "UMLInterfaceExtended"],
-  ["N-ary association", function (b, a, d) {
-    var c = new UMLNAssociation({
-      x: a,
-      y: d,
-      stereotypes: _stereotypes
-    });
-    b.addElement(c)
-  }, 1, "UMLNAssociation"],
-  ["Interface usage", function (c, b, e, a, d) {
+  // ["Interface (extended notation)", function (b, a, d) {
+  //   var c = new UMLInterfaceExtended({
+  //     x: a,
+  //     y: d,
+  //     stereotypes: _stereotypes
+  //   });
+  //   b.addElement(c)
+  // }, 1, "UMLInterfaceExtended"],
+  // ["N-ary association", function (b, a, d) {
+  //   var c = new UMLNAssociation({
+  //     x: a,
+  //     y: d,
+  //     stereotypes: _stereotypes
+  //   });
+  //   b.addElement(c)
+  // }, 1, "UMLNAssociation"],
+  ["Uso de Interfaz", function (c, b, e, a, d) {
     c.addRelationFromPoints(new UMLInterfaceUsage(), b, e, a, d)
   }, 2, "UMLInterfaceUsage"],
-  ["Interface use", function (c, b, e, a, d) {
+  ["Usar Interfaz", function (c, b, e, a, d) {
     c.addRelationFromPoints(new UMLInterfaceUse(), b, e, a, d)
   }, 2, "UMLInterfaceUse"],
-  ["Interface realization", function (c, b, e, a, d) {
+  ["Realizacion de Interfaz", function (c, b, e, a, d) {
     c.addRelationFromPoints(new UMLInterfaceRealization(), b, e, a, d)
   }, 2, "UMLInterfaceRealization"],
-  ["Generalization", function (e, d, g, c, f) {
+  ["Generalizacion", function (e, d, g, c, f) {
     var b = e.getElementByPoint(d, g);
     var a = e.getElementByPoint(c, f);
     if (b && b.getType() == "UMLGeneralizationSet") {
@@ -1152,31 +1153,31 @@ _specificMenu.UMLComponentDiagram = [
       }
     }
   }, 2, "UMLGeneralization"],
-  ["Generalization set", function (c, b, e, a, d) {
-    c.addRelationFromPoints(new UMLGeneralizationSet(), b, e, a, d)
-  }, 2, "UMLGeneralizationSet"],
-  ["Association", function (c, b, e, a, d) {
+  // ["Generalization set", function (c, b, e, a, d) {
+  //   c.addRelationFromPoints(new UMLGeneralizationSet(), b, e, a, d)
+  // }, 2, "UMLGeneralizationSet"],
+  ["Asociacion", function (c, b, e, a, d) {
     c.addRelationFromPoints(new UMLAssociation(), b, e, a, d)
   }, 2, "UMLAssociation"],
-  ["Component realization", function (c, b, e, a, d) {
-    c.addRelationFromPoints(new UMLRealization(), b, e, a, d)
-  }, 2, "UMLRealization"],
-  ["Connector", function (c, b, e, a, d) {
-    c.addRelationFromPoints(new UMLConnector(), b, e, a, d)
-  }, 2, "UMLConnector"],
-  ["Dependency", function (c, b, e, a, d) {
+  // ["Component realization", function (c, b, e, a, d) {
+  //   c.addRelationFromPoints(new UMLRealization(), b, e, a, d)
+  // }, 2, "UMLRealization"],
+  // ["Connector", function (c, b, e, a, d) {
+  //   c.addRelationFromPoints(new UMLConnector(), b, e, a, d)
+  // }, 2, "UMLConnector"],
+  ["Dependencia", function (c, b, e, a, d) {
     c.addRelationFromPoints(new UMLDependency(), b, e, a, d)
   }, 2, "UMLDependency"],
 ];
 _acceptedDiagrams.push("UMLDeploymentDiagram");
 _acceptedElementsUML.push(["Artifact", "UMLArtifact"], ["Association n-ary", "UMLNAssociation"], ["Generalization set", "UMLGeneralizationSet"], ["Node", "UMLNode"], ["Node(text notation)", "UMLNodeTextNotation"], ["Deployment specification", "UMLDeploymentSpecification"]);
-_genericMenu.push(["New deployment diagram", function (a) {
+_genericMenu.push(["Diagrama de Despliegue", function (a) {
   a.addDiagram(new UMLDeploymentDiagram({
     backgroundNodes: ApplicationValues.element_color
   }))
 }, 0, "UMLDeploymentDiagram"]); /*http://www.jrromero.net/tools/jsUML2*/
 _specificMenu.UMLDeploymentDiagram = [
-  ["Artifact", function (b, a, d) {
+  ["Artefacto", function (b, a, d) {
     var c = new UMLArtifact({
       x: a,
       y: d,
@@ -1184,7 +1185,7 @@ _specificMenu.UMLDeploymentDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLArtifact"],
-  ["Artifact instance", function (b, a, d) {
+  ["Instancia de Artefacto", function (b, a, d) {
     var c = new UMLInstanceArtifact({
       x: a,
       y: d,
@@ -1192,7 +1193,7 @@ _specificMenu.UMLDeploymentDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLInstanceArtifact"],
-  ["Deployment specification", function (b, a, d) {
+  ["Especificacion de Despliegue", function (b, a, d) {
     var c = new UMLDeploymentSpecification({
       x: a,
       y: d,
@@ -1200,7 +1201,7 @@ _specificMenu.UMLDeploymentDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLDeploymentSpecification"],
-  ["Node", function (b, a, d) {
+  ["Nodo", function (b, a, d) {
     var c = new UMLNode({
       x: a,
       y: d,
@@ -1208,7 +1209,7 @@ _specificMenu.UMLDeploymentDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLNode"],
-  ["Node(text notation)", function (b, a, d) {
+  ["Nodo(notacion de texto)", function (b, a, d) {
     var c = new UMLNodeTextNotation({
       x: a,
       y: d,
@@ -1216,15 +1217,15 @@ _specificMenu.UMLDeploymentDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLNodeTextNotation"],
-  ["N-ary association", function (b, a, d) {
-    var c = new UMLNAssociation({
-      x: a,
-      y: d,
-      stereotypes: _stereotypes
-    });
-    b.addElement(c)
-  }, 1, "UMLNAssociation"],
-  ["Generalization", function (e, d, g, c, f) {
+  // ["N-ary association", function (b, a, d) {
+  //   var c = new UMLNAssociation({
+  //     x: a,
+  //     y: d,
+  //     stereotypes: _stereotypes
+  //   });
+  //   b.addElement(c)
+  // }, 1, "UMLNAssociation"],
+  ["Generalizacion", function (e, d, g, c, f) {
     var b = e.getElementByPoint(d, g);
     var a = e.getElementByPoint(c, f);
     if (b && b.getType() == "UMLGeneralizationSet") {
@@ -1239,10 +1240,10 @@ _specificMenu.UMLDeploymentDiagram = [
       }
     }
   }, 2, "UMLGeneralization"],
-  ["Generalization set", function (c, b, e, a, d) {
-    c.addRelationFromPoints(new UMLGeneralizationSet(), b, e, a, d)
-  }, 2, "UMLGeneralizationSet"],
-  ["Association", function (e, d, g, c, f) {
+  // ["Generalization set", function (c, b, e, a, d) {
+  //   c.addRelationFromPoints(new UMLGeneralizationSet(), b, e, a, d)
+  // }, 2, "UMLGeneralizationSet"],
+  ["Asociacion", function (e, d, g, c, f) {
     var b = e.getElementByPoint(d, g); /*http://www.jrromero.net/tools/jsUML2*/
     var a = e.getElementByPoint(c, f);
     if (b && b.getType() == "UMLNAssociation") {
@@ -1257,25 +1258,25 @@ _specificMenu.UMLDeploymentDiagram = [
       }
     }
   }, 2, "UMLAssociation"],
-  ["Dependency", function (c, b, e, a, d) {
+  ["Dependencia", function (c, b, e, a, d) {
     c.addRelationFromPoints(new UMLDependency(), b, e, a, d)
   }, 2, "UMLDependency"],
-  ["Deployment", function (c, b, e, a, d) {
+  ["Despliegue", function (c, b, e, a, d) {
     c.addRelationFromPoints(new UMLDeployment(), b, e, a, d)
   }, 2, "UMLDeployment"],
-  ["Manifestation", function (c, b, e, a, d) {
-    c.addRelationFromPoints(new UMLManifestation(), b, e, a, d)
-  }, 2, "UMLManifestation"]
+  // ["Manifestation", function (c, b, e, a, d) {
+  //   c.addRelationFromPoints(new UMLManifestation(), b, e, a, d)
+  // }, 2, "UMLManifestation"]
 ];
 _acceptedDiagrams.push("UMLActivityDiagram");
 _acceptedElementsUML.push(["AcceptEventAction", "UMLAcceptEventAction"], ["TimeEvent", "UMLTimeEvent"], ["SendSignalAction", "UMLSendSignalAction"], ["Action", "UMLAction"], ["ObjectNode", "UMLObject"], ["Activity", "UMLActivity"], ["DataStore", "UMLDataStore"], ["Connector", "UMLConnectorActivity"], ["HorizontalSwimlane", "UMLHorizontalSwimlane"], ["VerticalSwimlane", "UMLVerticalSwimlane"], ["Horizontal Hierarchical Swimlane", "UMLHorizontalHierarchicalSwimlane"], ["Vertical Hierarchical Swimlane", "UMLVerticalHierarchicalSwimlane"]);
-_genericMenu.push(["New activity diagram", function (a) {
+_genericMenu.push(["Diagrama de Actividad", function (a) {
   a.addDiagram(new UMLActivityDiagram({
     backgroundNodes: ApplicationValues.element_color
   }))
 }, 0, "UMLActivityDiagram"]);
 _specificMenu.UMLActivityDiagram = [
-  ["AcceptEventAction", function (b, a, d) {
+  ["Aceptar Accion de Evento", function (b, a, d) {
     var c = new UMLAcceptEventAction({
       x: a,
       y: d,
@@ -1283,7 +1284,7 @@ _specificMenu.UMLActivityDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLAcceptEventAction"],
-  ["TimeEvent", function (b, a, d) {
+  ["Evento de Tiempo", function (b, a, d) {
     var c = new UMLTimeEvent({
       x: a,
       y: d,
@@ -1291,7 +1292,7 @@ _specificMenu.UMLActivityDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLTimeEvent"],
-  ["SendSignalAction", function (b, a, d) {
+  ["Enviar Accion de Señal", function (b, a, d) {
     var c = new UMLSendSignalAction({
       x: a,
       y: d,
@@ -1299,7 +1300,7 @@ _specificMenu.UMLActivityDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLSendSignalAction"],
-  ["Action", function (b, a, d) {
+  ["Accion", function (b, a, d) {
     var c = new UMLAction({
       x: a,
       y: d,
@@ -1307,7 +1308,7 @@ _specificMenu.UMLActivityDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLAction"],
-  ["ObjectNode", function (b, a, d) {
+  ["Nodo Objeto", function (b, a, d) {
     var c = new UMLObject({
       x: a,
       y: d,
@@ -1315,7 +1316,7 @@ _specificMenu.UMLActivityDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLObject"],
-  ["Activity", function (b, a, d) {
+  ["Actividad", function (b, a, d) {
     var c = new UMLActivity({
       x: a,
       y: d,
@@ -1323,7 +1324,7 @@ _specificMenu.UMLActivityDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLActivity"],
-  ["DataStore", function (b, a, d) {
+  ["Almacenamiento de Dato", function (b, a, d) {
     var c = new UMLDataStore({
       x: a,
       y: d,
@@ -1331,7 +1332,7 @@ _specificMenu.UMLActivityDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLDataStore"],
-  ["Connector", function (b, a, d) {
+  ["Conector", function (b, a, d) {
     var c = new UMLConnectorActivity({
       x: a,
       y: d,
@@ -1339,62 +1340,62 @@ _specificMenu.UMLActivityDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLConnector2"],
-  ["HorizontalSwimlane", function (b, a, c) {
+  ["Carril Horizontal", function (b, a, c) {
     b.addElement(new UMLHorizontalSwimlane({
       x: a,
       y: c
     }))
   }, 1, "UMLHorizontalSwimlane"],
-  ["VerticalSwimlane", function (b, a, c) {
+  ["Carril Vertical", function (b, a, c) {
     b.addElement(new UMLVerticalSwimlane({
       x: a,
       y: c
     }))
   }, 1, "UMLVerticalSwimlane"],
-  ["HorizontalHierarchicalSwimlane", function (b, a, d) {
-    var c = new UMLHorizontalHierarchicalSwimlane({
-      x: a,
-      y: d,
-      stereotypes: _stereotypes
-    });
-    b.addElement(c)
-  }, 1, "UMLHorizontalHierarchicalSwimlane"],
-  ["VerticalHierarchicalSwimlane", function (b, a, d) {
-    var c = new UMLVerticalHierarchicalSwimlane({
-      x: a,
-      y: d,
-      stereotypes: _stereotypes
-    });
-    b.addElement(c)
-  }, 1, "UMLVerticalHierarchicalSwimlane"],
-  ["Add pin", function (b, a, e) {
-    var d = b.getElementByPoint(a, e);
-    if (d != null && d.getType() == "UMLAction") {
-      var c = new UMLPin({
-        stereotypes: _stereotypes
-      });
-      d.addPort(c)
-    }
-  }, 1, "UMLPin"],
-  ["Parameter node", function (b, a, e) {
-    var d = b.getElementByPoint(a, e);
-    if (d != null && d.getType() == "UMLActivity") {
-      var c = new UMLParameterNode({
-        stereotypes: _stereotypes
-      });
-      d.addPort(c)
-    }
-  }, 1, "UMLParameterNode"],
-  ["Expansion node", function (b, a, e) {
-    var d = b.getElementByPoint(a, e);
-    if (d != null && d.getType() == "UMLAction") {
-      var c = new UMLExpansionNode({
-        stereotypes: _stereotypes
-      });
-      d.addPort(c)
-    }
-  }, 1, "UMLExpansionNode"],
-  ["Flow/Edge", function (c, b, f, a, e) {
+  // ["HorizontalHierarchicalSwimlane", function (b, a, d) {
+  //   var c = new UMLHorizontalHierarchicalSwimlane({
+  //     x: a,
+  //     y: d,
+  //     stereotypes: _stereotypes
+  //   });
+  //   b.addElement(c)
+  // }, 1, "UMLHorizontalHierarchicalSwimlane"],
+  // ["VerticalHierarchicalSwimlane", function (b, a, d) {
+  //   var c = new UMLVerticalHierarchicalSwimlane({
+  //     x: a,
+  //     y: d,
+  //     stereotypes: _stereotypes
+  //   });
+  //   b.addElement(c)
+  // }, 1, "UMLVerticalHierarchicalSwimlane"],
+  // ["Add pin", function (b, a, e) {
+  //   var d = b.getElementByPoint(a, e);
+  //   if (d != null && d.getType() == "UMLAction") {
+  //     var c = new UMLPin({
+  //       stereotypes: _stereotypes
+  //     });
+  //     d.addPort(c)
+  //   }
+  // }, 1, "UMLPin"],
+  // ["Parameter node", function (b, a, e) {
+  //   var d = b.getElementByPoint(a, e);
+  //   if (d != null && d.getType() == "UMLActivity") {
+  //     var c = new UMLParameterNode({
+  //       stereotypes: _stereotypes
+  //     });
+  //     d.addPort(c)
+  //   }
+  // }, 1, "UMLParameterNode"],
+  // ["Expansion node", function (b, a, e) {
+  //   var d = b.getElementByPoint(a, e);
+  //   if (d != null && d.getType() == "UMLAction") {
+  //     var c = new UMLExpansionNode({
+  //       stereotypes: _stereotypes
+  //     });
+  //     d.addPort(c)
+  //   }
+  // }, 1, "UMLExpansionNode"],
+  ["Flujo", function (c, b, f, a, e) {
     var j = c.getElementByPoint(b, f);
     var h = c.getElementByPoint(a, e);
     var g = 0;
@@ -1417,22 +1418,22 @@ _specificMenu.UMLActivityDiagram = [
       }))
     }
   }, 2, "UMLFlow"],
-  ["ExceptionHandler", function (c, b, e, a, d) {
-    c.addRelationFromPoints(new UMLExceptionHandler(), b, e, a, d)
-  }, 2, "UMLExceptionHandler"],
-  ["ActivityFinal", function (b, a, c) {
+  // ["ExceptionHandler", function (c, b, e, a, d) {
+  //   c.addRelationFromPoints(new UMLExceptionHandler(), b, e, a, d)
+  // }, 2, "UMLExceptionHandler"],
+  ["Final de Actividad", function (b, a, c) {
     b.addElement(new UMLActivityFinal({
       x: a,
       y: c
     }))
   }, 1, "UMLActivityFinal"],
-  ["InitialNode", function (b, a, c) {
+  ["Nodo Inicial", function (b, a, c) {
     b.addElement(new UMLInitialNode({
       x: a,
       y: c
     }))
   }, 1, "UMLInitialNode"],
-  ["FlowFinal", function (b, a, d) {
+  ["Final de Flujo", function (b, a, d) {
     var c = new UMLFlowFinal({
       x: a,
       y: d,
@@ -1440,7 +1441,7 @@ _specificMenu.UMLActivityDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLFlowFinal"],
-  ["Decision/Merge Node", function (b, a, d) {
+  ["Bifurcacion", function (b, a, d) {
     var c = new UMLDecision_MergeNode({
       x: a,
       y: d,
@@ -1448,7 +1449,7 @@ _specificMenu.UMLActivityDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLDecision_MergeNode"],
-  ["Fork/Join Node", function (b, a, c) {
+  ["Fork/Join", function (b, a, c) {
     b.addElement(new UMLFork_JoinNode({
       x: a,
       y: c
@@ -1457,13 +1458,13 @@ _specificMenu.UMLActivityDiagram = [
 ];
 _acceptedDiagrams.push("UMLSequenceDiagram");
 _acceptedElementsUML.push(["Lifeline", "UMLLifeline"], ["Option", "UMLOption"], ["Alternative", "UMLAlternative"], ["Loop", "UMLLoop"], ["Break", "UMLBreak"]);
-_genericMenu.push(["New sequence diagram", function (a) {
+_genericMenu.push(["Diagrama de Secencia", function (a) {
   a.addDiagram(new UMLSequenceDiagram({
     backgroundNodes: ApplicationValues.element_color
   }))
 }, 0, "UMLSequenceDiagram"]);
 _specificMenu.UMLSequenceDiagram = [
-  ["Lifeline", function (b, a, d) {
+  ["Linea de Vida", function (b, a, d) {
     var c = new UMLLifeline({
       x: a,
       y: 70,
@@ -1471,7 +1472,7 @@ _specificMenu.UMLSequenceDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLLifeline"],
-  ["Create", function (e, d, g, c, f) {
+  ["Crear", function (e, d, g, c, f) {
     var b = e.getElementByPoint(d, g);
     var a = e.getElementByPoint(c, f);
     if (b && a && b != a && (b.getType() == "UMLLifeline" || b.getType() == "TimeInterval") && a.getType() == "UMLLifeline" && !a.getCreate()) {
@@ -1482,7 +1483,7 @@ _specificMenu.UMLSequenceDiagram = [
       }))
     }
   }, 2, "UMLCreate"],
-  ["Destroy", function (e, d, g, c, f) {
+  ["Destruir", function (e, d, g, c, f) {
     var b = e.getElementByPoint(d, g);
     var a = e.getElementByPoint(c, f);
     if (b && a && b != a && (b.getType() == "UMLLifeline" || b.getType() == "TimeInterval") && a.getType() == "UMLLifeline" && !a.getDelete()) {
@@ -1493,7 +1494,7 @@ _specificMenu.UMLSequenceDiagram = [
       }))
     }
   }, 2, "UMLDestroy"],
-  ["Option", function (b, a, d) {
+  ["Opcion", function (b, a, d) {
     var c = new UMLOption({
       x: a,
       y: d,
@@ -1501,7 +1502,7 @@ _specificMenu.UMLSequenceDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLInteraction"],
-  ["Alternative", function (b, a, d) {
+  ["Alt", function (b, a, d) {
     var c = new UMLAlternative({
       x: a,
       y: d,
@@ -1525,7 +1526,7 @@ _specificMenu.UMLSequenceDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLInteraction"],
-  ["Send message", function (e, d, g, c, f) {
+  ["Mensaje", function (e, d, g, c, f) {
     var b = e.getElementByPoint(d, g);
     var a = e.getElementByPoint(c, f);
     if (b && a && (b.getType() == "UMLLifeline" || b.getType() == "TimeInterval") && (a.getType() == "UMLLifeline" || a.getType() == "TimeInterval")) {
@@ -1536,18 +1537,18 @@ _specificMenu.UMLSequenceDiagram = [
       }))
     }
   }, 2, "UMLSendMessage"],
-  ["Call message", function (e, d, g, c, f) {
-    var b = e.getElementByPoint(d, g);
-    var a = e.getElementByPoint(c, f);
-    if (b && a && (b.getType() == "UMLLifeline" || b.getType() == "TimeInterval") && (a.getType() == "UMLLifeline" || a.getType() == "TimeInterval")) {
-      e.addElement(new UMLCallMessage({
-        a: b,
-        b: a,
-        y: g
-      }))
-    }
-  }, 2, "UMLCallMessage"],
-  ["Reply message", function (e, d, g, c, f) {
+  // ["Call message", function (e, d, g, c, f) {
+  //   var b = e.getElementByPoint(d, g);
+  //   var a = e.getElementByPoint(c, f);
+  //   if (b && a && (b.getType() == "UMLLifeline" || b.getType() == "TimeInterval") && (a.getType() == "UMLLifeline" || a.getType() == "TimeInterval")) {
+  //     e.addElement(new UMLCallMessage({
+  //       a: b,
+  //       b: a,
+  //       y: g
+  //     }))
+  //   }
+  // }, 2, "UMLCallMessage"],
+  ["Respuesta", function (e, d, g, c, f) {
     var b = e.getElementByPoint(d, g);
     var a = e.getElementByPoint(c, f);
     if (b != a && b != null && (b.getType() == "UMLLifeline" || b.getType() == "TimeInterval") && (a.getType() == "UMLLifeline" || a.getType() == "TimeInterval")) {
@@ -1558,7 +1559,7 @@ _specificMenu.UMLSequenceDiagram = [
       }))
     }
   }, 2, "UMLReplyMessage"],
-  ["Delete message", function (e, d, g, c, f) {
+  ["Eliminar Mensaje", function (e, d, g, c, f) {
     var b = e.getElementByPoint(d, g);
     var a = e.getElementByPoint(c, f);
     if (b && a && b != a && (b.getType() == "UMLLifeline" || b.getType() == "TimeInterval") && a.getType() == "UMLLifeline" && !a.getDelete()) {
@@ -1572,25 +1573,25 @@ _specificMenu.UMLSequenceDiagram = [
 ];
 _acceptedDiagrams.push("UMLStateMachineDiagram");
 _acceptedElementsUML.push(["SimpleState", "UMLSimpleState"], ["CompositeState", "UMLCompositeState"], ["VerticalRegion", "UMLVerticalRegion"], ["HorizontalRegion", "UMLHorizontalRegion"]);
-_genericMenu.push(["New state machine diagram", function (a) {
+_genericMenu.push(["Diagrama de Maquina de Estado", function (a) {
   a.addDiagram(new UMLStateMachineDiagram({
     backgroundNodes: ApplicationValues.element_color
   }))
 }, 0, "UMLStateMachineDiagram"]);
 _specificMenu.UMLStateMachineDiagram = [
-  ["Initial state", function (b, a, c) {
+  ["Estado Incial", function (b, a, c) {
     b.addElement(new UMLInitialPseudostate({
       x: a,
       y: c
     }))
   }, 1, "UMLInitialPseudostate"],
-  ["Final state", function (b, a, c) {
+  ["Estado Final", function (b, a, c) {
     b.addElement(new UMLFinalState({
       x: a,
       y: c
     }))
   }, 1, "UMLFinalState"],
-  ["Terminate", function (b, a, d) {
+  ["Terminar", function (b, a, d) {
     var c = new UMLTerminate({
       x: a,
       y: d,
@@ -1601,7 +1602,7 @@ _specificMenu.UMLStateMachineDiagram = [
       y: d
     }))
   }, 1, "UMLTerminate"],
-  ["Entry point", function (b, a, d) {
+  ["Punto de Entrada", function (b, a, d) {
     var c = new UMLEntryPoint({
       x: a,
       y: d,
@@ -1609,7 +1610,7 @@ _specificMenu.UMLStateMachineDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLEntryPoint"],
-  ["Exit point", function (b, a, d) {
+  ["Punto de Salida", function (b, a, d) {
     var c = new UMLExitPoint({
       x: a,
       y: d,
@@ -1617,7 +1618,7 @@ _specificMenu.UMLStateMachineDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLExitPoint"],
-  ["Junction", function (b, a, d) {
+  ["Union", function (b, a, d) {
     var c = new UMLJunction({
       x: a,
       y: d,
@@ -1625,7 +1626,7 @@ _specificMenu.UMLStateMachineDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLJunction"],
-  ["Simple state", function (b, a, d) {
+  ["Estado Simple", function (b, a, d) {
     var c = new UMLSimpleState({
       x: a,
       y: d,
@@ -1633,7 +1634,7 @@ _specificMenu.UMLStateMachineDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLSimpleState"],
-  ["Composite state", function (b, a, d) {
+  ["Estado Compuesto", function (b, a, d) {
     var c = new UMLCompositeState({
       x: a,
       y: d,
@@ -1641,7 +1642,7 @@ _specificMenu.UMLStateMachineDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLCompositeState"],
-  ["Vertical region", function (b, a, d) {
+  ["Region Vertical", function (b, a, d) {
     var c = new UMLVerticalRegion({
       x: a,
       y: d,
@@ -1649,7 +1650,7 @@ _specificMenu.UMLStateMachineDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLVerticalRegion"],
-  ["Horizontal region", function (b, a, d) {
+  ["Region Horizontal", function (b, a, d) {
     var c = new UMLHorizontalRegion({
       x: a,
       y: d,
@@ -1657,16 +1658,16 @@ _specificMenu.UMLStateMachineDiagram = [
     });
     b.addElement(c)
   }, 1, "UMLHorizontalRegion"],
-  ["Transition", function (c, b, e, a, d) {
+  ["Transicion", function (c, b, e, a, d) {
     c.addRelationFromPoints(new UMLTransition(), b, e, a, d)
   }, 2, "UMLTransition"]
 ];
-_acceptedDiagrams.push("UMLProfile");
-_genericMenu.push(["New profile", function (a) {
-  a.addDiagram(new UMLProfile({
-    backgroundNodes: ApplicationValues.element_color
-  }))
-}, 0, "UMLProfile"]);
+// _acceptedDiagrams.push("UMLProfile");
+// _genericMenu.push(["New profile", function (a) {
+//   a.addDiagram(new UMLProfile({
+//     backgroundNodes: ApplicationValues.element_color
+//   }))
+// }, 0, "UMLProfile"]);
 Application.prototype.setProfileSpecificMenu = function () {
   var a = this;
   _specificMenu.UMLProfile = [
