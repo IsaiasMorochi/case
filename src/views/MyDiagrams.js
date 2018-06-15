@@ -27,42 +27,33 @@ class MyDiagrams extends React.Component {
       });
   }
 
-  render() {
-    return (
-      <div className="row">
-        <div className="col-lg-12 col-md-12 col-sm-12">
-          <Button
-            onClick={() => {
-              window.location.href = "/newdiagram";
-            }}
-            variant="raised"
-            color="primary"
-            aria-label="add"
-            style={{ backgroundColor: "#3abdfc", width: "100%" }}
-          >
-            Crear Nuevo Diagrama
-            <AddIcon />
-          </Button>
-        </div>
+    _userParams(diagramid){
+        var user = app.auth().currentUser
+        return {
+            collaborator: user.uid,
+            diagram: diagramid,
+            owner: user.uid
+        }
+    }
 
-        <div className="col-lg-12 col-md-12 col-sm-12">
-          <br />
-          {this.state.diagrams.map((diagram, index) => {
-            return (
-              <CardDiagram
-                key={index}
-                diagramid={diagram.key}
-                name={diagram.val().name}
-                date={diagram.val().date}
-                description={diagram.val().description}
-                image="http://backgroundcheckall.com/wp-content/uploads/2017/12/background-material-design-10.jpg"
-              />
-            );
-          })}
-        </div>
-      </div>
-    );
-  }
+    render(){
+        return (
+            <div className="row">
+                <div className="col-lg-12 col-md-12 col-sm-12">
+                <Button onClick={()=>{window.location.href = '/newdiagram'}} variant="raised" color="primary" aria-label="add" style={{ backgroundColor: "#3abdfc", width: "100%" }} >
+                    <AddIcon />
+                </Button>
+                </div>
+                <div className="col-lg-12 col-md-12 col-sm-12">
+                    <div className="row">
+                        {this.state.diagrams.map((diagram, index)=>{
+                            return <CardDiagram key={index} collaboration={this._userParams(diagram.key)} diagramid={diagram.key} name={diagram.val().name} date={diagram.val().date} description={diagram.val().description} image="http://backgroundcheckall.com/wp-content/uploads/2017/12/background-material-design-10.jpg" />
+                        })}
+                    </div>
+                </div>
+            </div>
+        )
+    }
 }
 
 export default MyDiagrams;

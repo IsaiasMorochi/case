@@ -13,12 +13,14 @@ const appRoutes = [
         path: '/login',
         sidebarName: 'Login',
         icon: Face,
+        ignore:true,
         component: Login
     },
     {
       path: "/signup",
       sidebarName: "Signup",
       icon: Face,
+      ignore:true,
       component: Signup
     },
     {
