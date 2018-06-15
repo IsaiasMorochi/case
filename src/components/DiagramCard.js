@@ -77,13 +77,7 @@ class DiagramCard extends React.Component{
           </CardContent>
           <CardActions className={classes.actions} disableActionSpacing>
           <div className="row">
-            <div className="col-lg-6 col-md-6 col-sm-6">
-              <Button onClick={this._handleOpenModal} variant="outlined" color="secondary">
-                  Compartir
-                <ShareIcon />
-              </Button>
-            </div>
-            <div className="col-lg-6 col-md-6 col-sm-6">
+            <div className="col-lg-12 col-md-12 col-sm-12">
               <Button onClick={()=>this._toDiagram()} variant="outlined" color="secondary" >
                   Editar
                 <ShareIcon/>

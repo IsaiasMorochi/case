@@ -22,10 +22,11 @@ class Signup extends React.Component {
         .auth()
         .createUserWithEmailAndPassword(email.value, password.value);
       localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("login", JSON.stringify(user));
+      app.database().ref(user.user.uid+'/userinfo').set({
+        email: email.value
+      })
       this.props.history.push("/profile");
-      console.log("======== Usuario Creado =============");
-      console.log(user);
-      console.log("====================================");
     } catch (error) {
       alert(error);
     }

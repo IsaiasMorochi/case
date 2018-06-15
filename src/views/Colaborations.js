@@ -30,7 +30,7 @@ class Colaborations extends React.Component {
         return (          
         <div className="row">
             {this.state.collaborations.map((coll, index)=>{
-                return <DiagramCard key={index} collaboration={coll} image="http://backgroundcheckall.com/wp-content/uploads/2017/12/background-material-design-10.jpg" />
+                return <DiagramCard key={index} collaboration={coll} image="https://www.apollo-formation.com/wp-content/uploads/Unified_Modeling_Language-250x250.png" />
             })}
         </div>
         )

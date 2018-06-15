@@ -20,44 +20,41 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Typography from '@material-ui/core/Typography';
 import BubbleChart from '@material-ui/icons/BubbleChart';
 import Edit from '@material-ui/icons/Edit';
-import Delete from '@material-ui/icons/Delete';
-
+import CheckCircle from "@material-ui/icons/CheckCircle";
 
 import ModalUsers from './ModalUsers'
 import app from '../base'
-
-class CardDiagram extends React.Component {
+class Inactives extends React.Component {
     constructor(props){
      super(props)
      this.state = {
       openModal: false
      }
     }
-    _handleOpenModal = () => this.setState({ openModal: true });
 
-    _handleCloseModal = () => this.setState({ openModal: false });
 
-    _toEdit = ()=>{
-      localStorage.setItem("diagramcollaborative",JSON.stringify(this.props.collaboration))
-      window.location.href = '/realtime'
-    }
 
-    _deleteDiagram(diagramid){
+    _activeDiagram(diagramid){
       const currentuser = app.auth().currentUser
       app.database().ref(currentuser.uid+"/diagrams/"+diagramid).once("value").then((diagram)=>{
         const datauser = diagram.val()
+        console.log("AQUI")
+        console.log(datauser)
         const params = {
           date: datauser.date,
           description: datauser.description,
           diagramtype: datauser.diagramtype,
           name: datauser.name,
           xml: datauser.xml,
-          inactive: true
+          inactive: false
         }
         app.database().ref(currentuser.uid+"/diagrams/"+diagramid).set(params)
-        window.location.href='/'
+        this.props.history.push('/')
       })
     }
+    
+    
+    
     render(){
     const { classes, name, date, image, description } = this.props;
     return (
@@ -71,7 +68,7 @@ class CardDiagram extends React.Component {
             }
             action={
               <IconButton>
-                <Delete onClick={()=>this._deleteDiagram(this.props.diagramid)}/>
+                <CheckCircle onClick={()=>this._activeDiagram(this.props.diagramid)}/>
               </IconButton>
             }
             title={name}
@@ -87,30 +84,13 @@ class CardDiagram extends React.Component {
               {description}
             </Typography>
           </CardContent>
-          <CardActions className={classes.actions} disableActionSpacing>
-          <div className="row">
-            <div className="col-lg-6 col-md-6 col-sm-6">
-              <Button onClick={this._handleOpenModal} variant="outlined" style={{color: "#2874A6"}}>
-                Compartir
-                <ShareIcon />
-              </Button>
-            </div>
-            <div className="col-lg-6 col-md-6 col-sm-6">
-              <Button onClick={this._toEdit} variant="outlined" style={{color: "#CB4335"}} >
-                  Modificar
-                <ShareIcon  />
-              </Button>
-            </div>
-          </div>
-          </CardActions>
         </Card>
-        <ModalUsers diagramid={this.props.diagramid} openModal={this.state.openModal} _handleCloseModal={this._handleCloseModal.bind(this)} />
       </div>
     );
   }
 }
 
-CardDiagram.propTypes = {
+Inactives.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 const styles = theme => ({
@@ -139,4 +119,4 @@ const styles = theme => ({
     backgroundColor: blueGrey[700],
   },
 });
-export default withStyles(styles)(CardDiagram);
+export default withStyles(styles)(Inactives);

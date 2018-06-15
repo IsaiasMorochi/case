@@ -25,9 +25,6 @@ class Login extends React.Component {
       localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("login", JSON.stringify(user));
       this.props.history.push("/profile");
-      console.log("======== Usuario Logueado ===========");
-      console.log(user);
-      console.log("====================================");
     } catch (error) {
       alert(error);
     }
